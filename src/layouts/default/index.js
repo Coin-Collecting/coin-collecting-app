@@ -1,11 +1,7 @@
 import React, { PropTypes } from "react";
-import NavBar from '../../components/navbar';
-import GlobalFooter from '../../components/global-footer';
 import {connect} from 'react-redux';
 import { graphql, gql, compose } from 'react-apollo';
-import SlideMenu from '../../components/slide-menu';
 import { store } from '../../app';
-import { closeSlideMenu } from '../../actions/slide-menu';
 import { updateMe } from '../../actions/me';
 import { withRouter } from 'react-router-dom'
 
@@ -29,32 +25,20 @@ class DefaultLayout extends React.Component {
         history.push('/login');
       }
 		}
-
-		if (window.previousLocation && window.previousLocation.pathname !== nextProps.location.pathname && this.props.slideMenu.open) {
-		  store.dispatch(closeSlideMenu());
-    }
 	}
 
 	render() {
-		const { location, slideMenu, children, data} = this.props;
+		const { children, data} = this.props;
 
 		let classes = ["default-layout"];
-
-		if (slideMenu.open) classes.push('slid-left');
 
 		if (data.loading) return null;
 
 		return (
 			<div className={classes.join(' ')}>
-				<SlideMenu
-					isOpen={slideMenu.open}
-					location={location}
-				/>
-				<NavBar location={location}/>
 				<div className="default-section">
 					{ children }
 				</div>
-				<GlobalFooter/>
 			</div>
 		);
 	}
@@ -63,14 +47,12 @@ class DefaultLayout extends React.Component {
 DefaultLayout.propTypes = {
 	location: PropTypes.object,
 	data: PropTypes.object,
-	slideMenu: PropTypes.object,
   me: PropTypes.object,
 };
 
 function mapStateToProps(state){
   console.log(state.reducers);
 	return {
-		slideMenu: state.reducers.slideMenu,
     me: state.reducers.me,
 	}
 }

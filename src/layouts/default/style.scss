@@ -1,18 +1,1 @@
 @import '../../base/palette';
-
-.default-layout {
-  background-color: $brandedWhite;
-  position: relative;
-  right: 0;
-  transition: ease all .5s;
-
-  .default-section {
-    box-sizing: border-box;
-    min-height: calc(100vh - 101px - 50px);
-  }
-}
-
-.default-layout.slid-left {
-  position: relative;
-  right: 170px;
-}

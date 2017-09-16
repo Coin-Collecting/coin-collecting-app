@@ -3,7 +3,6 @@ import { graphql, gql, compose } from 'react-apollo';
 import {connect} from 'react-redux';
 import { CreateCoinMutation } from '../../mutations';
 import Spinner from '../../components/spinner';
-import AddCoin from '../../components/add-coin';
 const FontAwesome = require('react-fontawesome');
 import DefaultLayout from '../../layouts/default';
 import queryString from 'query-string';
@@ -16,19 +15,13 @@ class Coins extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			variety: undefined,
-			year: undefined,
-			mint: undefined,
-			mintage: undefined,
-			keyDate: false,
-			description: undefined,
 			isLoading: false,
 			coinCount: 5,
 		}
 	}
 
 	componentWillMount() {
-    let { history, location } = this.props;
+    let { location } = this.props;
     let { count } = queryString.parse(location.search);
     if (!count) this.updateCount();
 	}
@@ -91,31 +84,8 @@ class Coins extends React.Component {
 		return (
 			<DefaultLayout location={location}>
 				<section className={classes.join(' ')}>
-          { me.admin ?
-						<article className="create-coin-article">
-							<h3>Create A New Coin</h3>
-							<AddCoin
-								sizeOverride={browser.greaterThan.medium ? 'small' : null}
-								onSubmit={() => this.props.data.refetch()}
-							/>
-						</article>
-					: null }
 					<article className={me.admin ? "main-article" : "main-article-no-admin"}>
 						<h3>Coins</h3>
-						{/*<div className="filters clearfix">
-							<input type="text" placeholder="Search"/>
-							<div className="sort-by">
-								<div className="select-wrapper">
-									<select>
-										<option value="oldest">Oldest First</option>
-										<option value="newest">Newest First</option>
-										<option value="variety">Variety</option>
-										<option value="mint">Mint</option>
-										<option value="mintage">Mintage</option>
-									</select>
-								</div>
-							</div>
-						</div>*/}
 						<div className="sub-filters">
 							<p className="results-header clearfix">
 								<span>Results ({coins ? coins.edges.length : 0} of {coins ? coins.totalCount : 0})</span>
@@ -152,28 +122,9 @@ class Coins extends React.Component {
 								coins.edges.map(({ node }, index) => {
 									return (
 										<li key={'coin:' + node.id + index}>
-											<p>
-                        { me.admin ?
-													<FontAwesome name="pencil"/>
-                          : null }
-												<a
-													className="ebay"
-													target="_blank"
-													href={`https://www.ebay.com/sch/i.html?_nkw=${node.year}+${node.mint.mark}+${node.variety.name.replace(/ /g, '+')}&LH_BIN=1&_sop=15`}
-												>
-													<FontAwesome name="legal"/>
-												</a>
-												<span className="year">
-													{ node.year + '-' + node.mint.mark }
-												</span>
-												<span className="name">{ node.variety.issue.name !== node.variety.name ?
-                          node.variety.issue.name + ' ' + node.variety.name  :
-                          node.variety.issue.name
-												}</span>
-                        <span className="mintage">Minted: {node.mintage}</span>
-                        <span className="denomination">{node.variety.issue.denomination.kind.replace(/_/g, ' ')}</span>
-												<span className="description">{node.description}</span>
-											</p>
+                      <p>{ node.year + '-' + node.mint }</p>
+                      <p>{ node.issue.variety }</p>
+                      <p>{ node.issue.denomination.kind }</p>
 										</li>
 									)
 								})
@@ -208,45 +159,33 @@ function mapStateToProps(state){
 	}
 }
 
-// UPDATE an existing fundraiser
-const addCoinMutation = graphql(CreateCoinMutation, {
-	props: ({ mutate }) => ({
-		createCoin: ({variety, year, mint, mintage, keyDate, description}) => mutate({
-			variables: { variety, year, mint, mintage, keyDate, description },
-		}),
-	}),
-});
-
 let CoinsQuery = gql`
     query ($count: Int, $cursor: String, $offset: Int, $order: String,)
 		{
         coins(count: $count, cursor: $cursor, offset: $offset, order: $order) {
             totalCount
             edges {
+                cursor
                 node {
                     id
-                    variety {
-                        id
-                        name
-                        issue {
-                            id
-                            name
-                            denomination {
-                                id
-                                kind
-                            }
-                        }
-                    }
                     year
-                    mint {
-                        id
-                        mark
-                    }
+                    mint
                     mintage
-                    keyDate
                     description
+                    issue {
+                        denomination {
+                            id
+                            kind
+                            val
+                        }
+                        mass
+                        variety
+                        endYear
+                        startYear
+                        composition
+                        id
+                    }
                 }
-                cursor
             }
             pageInfo {
                 startCursor
@@ -272,5 +211,4 @@ let coinQueryWithData = graphql(CoinsQuery, {
 export default compose(
 	connect(mapStateToProps),
 	coinQueryWithData,
-	addCoinMutation,
 )(Coins);
