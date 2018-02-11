@@ -1,0 +1,31 @@
+@import '../../base/palette';
+
+.global-header {
+  background-color: $brandedAlt;
+
+  h1 {
+    margin: 0;
+    padding: 20px;
+    font-size: 18px;
+    display: inline-block;
+  }
+
+  nav {
+    display: inline-block;
+  }
+
+  ul {
+    list-style: none;
+    padding: 20px 0;
+    margin: 0;
+  }
+
+  li {
+    display: inline-block;
+    margin-right: 30px;
+  }
+
+  a {
+    color: $brandedWhite;
+  }
+}

@@ -24,7 +24,7 @@ networkInterface.use([{
       req.options.headers = {};  // Create the header object if needed.
     }
     // get the authentication token from local storage if it exists
-    const token = store.getState().reducers.token;
+    const token = localStorage.getItem('token');
     req.options.headers.authorization = token ? token : null;
     next();
   }

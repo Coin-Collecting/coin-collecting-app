@@ -5,22 +5,34 @@ import {
 	Switch,
 } from 'react-router-dom'
 
-import Base from './base';
-import Coins from './pages/coins';
+import './base/style.scss';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Section from './components/Section';
+import Main from './components/Main';
 
-import Login from './pages/login';
-import Logout from './pages/logout';
+import Homepage from './components/Homepage';
+import CoinList from './components/CoinList';
+import Authenticate from './components/Authenticate';
 
 export const routes = (
 	<Router>
-		<Route>
-			<Switch>
-				<Base>
-					<Route exact path="/" component={Coins}/>
-					<Route exact path="/login" component={Login}/>
-					<Route exact path="/logout" component={Logout}/>
-				</Base>
-			</Switch>
+		<Route render={props => {
+			return (
+				<div>
+					<Header {...props}/>
+					<Main {...props}>
+						<Authenticate {...props}>
+							<Section {...props}>
+								<Route exact path="/" component={Homepage} />
+								<Route exact path="/collection" component={CoinList} />
+							</Section>
+						</Authenticate>
+					</Main>
+					<Footer />
+				</div>
+			)
+		}}>
 		</Route>
 	</Router>
 );

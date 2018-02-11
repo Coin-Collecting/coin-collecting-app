@@ -1,10 +1,8 @@
-import { combineReducers } from 'redux'
-import token from './token'
-import me from './me'
+import { combineReducers } from 'redux';
 
-const reducers = combineReducers({
-	token,
-	me,
+import authentication from './authentication';
+
+// Combine the subreducers and export them
+export default combineReducers({
+  authentication,
 });
-
-export default reducers;
