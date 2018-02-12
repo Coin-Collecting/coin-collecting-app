@@ -40,3 +40,5 @@ public
 
 # Ignore yarn files
 yarn.lock
+
+*.pem
