@@ -32,3 +32,11 @@ export const abbreviateMint = mint => {
 			return mint;
 	}
 }
+
+export const issueIds = [
+	{
+		slug: 'half-cent',
+		name: 'Half Cent',
+		issueIds: [1, 2, 3, 4, 5]
+	}
+];

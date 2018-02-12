@@ -1,9 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './style.scss';
+import IssueImage from '../IssueImage'
 
 class Issues extends React.Component {
   render() {
+    const { match: { params }} = this.props;
+
+    if (params && params.issueId) {
+      return (<IssueImage issueId={params.issueId} />)
+    }
+
     return (
       <div className="issues-container">
         <nav>
@@ -65,9 +72,5 @@ class Issues extends React.Component {
     );
   }
 }
-
-Issues.propTypes = {};
-
-Issues.defaultProps = {};
 
 export default Issues;

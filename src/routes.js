@@ -31,14 +31,17 @@ export const routes = (
 									<Route exact path="/" component={Homepage} />
 									<Route path="/collection" >
 										<div>
-											<Issues />
+											<Issues {...props}/>
 											<Route path="/collection/:issueId/:page?" render={props => {
 												return (
-													<Collection
-														{...props}
-														issueId={props.match.params.issueId}
-														page={props.match.params.page || 1}
-													/>
+													<div>
+														<Issues {...props}/>
+														<Collection
+															{...props}
+															issueId={props.match.params.issueId}
+															page={props.match.params.page || 1}
+														/>
+													</div>
 												)
 											}} />
 										</div>
