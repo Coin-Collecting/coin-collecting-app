@@ -1,0 +1,89 @@
+@import '../../base/palette';
+
+.collection-container {
+  margin: 0;
+
+  table {
+    width: 100%;
+  }
+
+  td,
+  th {
+    padding: 10px;
+  }
+
+  thead {
+    th {
+      color: $brandedWhite;
+    }
+
+    tr {
+      background-color: $primaryColor;
+    }
+  }
+  tbody tr {
+    background-color: lighten($brandedAlt, 35%);
+
+    &:nth-child(odd) {
+      background-color: #fff;
+    }
+  }
+
+  .add-buttons {
+    button {
+      margin-right: 3px;
+    }
+  }
+
+  .fa-check-circle {
+    color: $primaryColor;
+  }
+
+  .fa-times-circle {
+    color: $secondaryColor;
+  }
+
+  .pagination {
+    padding: 20px 0;
+    text-align: center;
+
+    a {
+      padding: 0 10px;
+    }
+  }
+
+  .owned {
+    display: inline-block;
+    padding: 3px;
+    font-weight: 600;
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &.AG,
+    &.G,
+    &.VG {
+      background-color: $secondaryColor;
+      color: $brandedWhite;
+    }
+
+    &.F,
+    &.VF,
+    &.XF {
+      background-color: $primaryColor;
+      color: $brandedWhite;
+    }
+
+    &.AU,
+    &.PROOF {
+      background-color: $brandedAlt;
+      color: $brandedWhite;
+    }
+
+    &.Not-Graded {
+      background-color: #f0f0f0;
+    }
+  }
+}

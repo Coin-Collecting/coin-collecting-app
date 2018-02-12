@@ -3,6 +3,7 @@ import {
 	BrowserRouter as Router,
 	Route,
 	Switch,
+	Redirect,
 } from 'react-router-dom'
 
 import './base/style.scss';
@@ -13,8 +14,7 @@ import Section from './components/Section';
 import Main from './components/Main';
 
 import Homepage from './components/Homepage';
-import CoinList from './components/CoinCollection';
-import Library from './components/Library';
+import Collection from './components/Collection';
 import Authenticate from './components/Authenticate';
 import Issues from './components/Issues';
 
@@ -29,16 +29,15 @@ export const routes = (
 							<Section {...props}>
 								<Switch>
 									<Route exact path="/" component={Homepage} />
-									<Route path="/collection" component={CoinList} />
-									<Route path="/library" >
+									<Route path="/collection" >
 										<div>
 											<Issues />
-											<Route path="/library/:issueId/:page?" render={props => {
+											<Route path="/collection/:issueId/:page?" render={props => {
 												return (
-													<Library
+													<Collection
 														{...props}
 														issueId={props.match.params.issueId}
-														page={props.match.params.page}
+														page={props.match.params.page || 1}
 													/>
 												)
 											}} />

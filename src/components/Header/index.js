@@ -11,8 +11,7 @@ class Header extends React.Component {
         <nav>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/collection">My Collection</Link></li>
-            <li><Link to="/library">Library</Link></li>
+            <li><Link to="/collection">Collection</Link></li>
           </ul>
         </nav>
       </header>

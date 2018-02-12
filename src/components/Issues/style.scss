@@ -1,4 +1,28 @@
+@import '../../base/palette';
+
 .issues-container {
   margin: 0;
   padding: 0 0 40px;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: inline-block;
+    margin: 10px;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .active {
+    color: $primaryColor;
+    text-decoration: none;
+    font-weight: bold;
+  }
 }
