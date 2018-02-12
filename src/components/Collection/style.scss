@@ -62,6 +62,10 @@
       margin-right: 0;
     }
 
+    &:hover {
+      cursor: not-allowed;
+    }
+
     &.AG,
     &.G,
     &.VG {

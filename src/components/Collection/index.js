@@ -64,12 +64,22 @@ const CoinsQuery = gql`
 
 const AddCoinMutation = gql`
     mutation (
-        $coinId: String!,
-        $quality: String!,
+    $coinId: String!,
+    $quality: String!,
     ) {
         addUserCoin (
             coinId: $coinId,
             quality: $quality,
+        )
+    }
+`;
+
+const RemoveCoinMutation = gql`
+    mutation (
+    $id: String!,
+    ) {
+        removeUserCoin (
+            id: $id,
         )
     }
 `;
@@ -81,6 +91,7 @@ class Collection extends React.Component {
       issueId,
       page,
       addCoin,
+      removeCoin,
     } = this.props;
     if (loading) return (<Spinner />);
 
@@ -91,9 +102,10 @@ class Collection extends React.Component {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Year</th>
             <th>Mint</th>
+            <th>Variety</th>
+            <th>Mintage</th>
             <th>Owned</th>
             <th>Actions</th>
             <th>Ebay</th>
@@ -102,18 +114,25 @@ class Collection extends React.Component {
         <tbody>
         {
           coins && coins.edges && coins.edges.map(coin => {
-            const { id, year, mint, owned, issue } = coin.node;
+            const { id, year, mint, owned, issue, mintage } = coin.node;
             return (
               <tr key={id}>
-                <td>{ id }</td>
                 <td>{ year }</td>
                 <td>{ mint }</td>
+                <td>{ issue.variety }</td>
+                <td>{ mintage }</td>
                 <td>
                   {
                     owned.length > 0 && owned.map(coin => {
                       return (
                         <span
                           key={coin.id}
+                          onClick={() => {
+                            removeCoin({id: coin.id})
+                              .then(() => {
+                                this.props.coinsData.refetch();
+                              })
+                          }}
                           className={[
                             "owned",
                             coin.quality.replace(/ /g, '-')
@@ -133,7 +152,7 @@ class Collection extends React.Component {
                           key={index}
                           onClick={() => {
                             addCoin({coinId: id, quality: quality})
-                              .then(res => {
+                              .then(() => {
                                 this.props.coinsData.refetch();
                               })
                           }}
@@ -181,11 +200,13 @@ Collection.propTypes = {
     collection: PropTypes.array,
   }),
   addCoin: PropTypes.func.isRequired,
+  removeCoin: PropTypes.func.isRequired,
 };
 
 Collection.defaultProps = {
   coinsData: {},
   addCoin: () => false,
+  removeCoin: () => false,
 };
 
 const coinsQuery = graphql(CoinsQuery, {
@@ -211,7 +232,18 @@ const addCoinMutation = graphql(AddCoinMutation, {
   }),
 });
 
+const removeCoinMutation = graphql(RemoveCoinMutation, {
+  props: ({ mutate }) => ({
+    removeCoin: ({id}) => {
+      return mutate({
+        variables: {id},
+      });
+    },
+  }),
+});
+
 export default compose(
   coinsQuery,
   addCoinMutation,
+  removeCoinMutation,
 )(Collection);
