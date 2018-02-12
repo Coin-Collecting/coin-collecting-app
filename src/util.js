@@ -19,3 +19,16 @@ export function getCompositionString(composition) {
 
 	return compString;
 }
+
+export const abbreviateMint = mint => {
+	switch (mint) {
+    case 'Philadelphia':
+      return "P";
+    case 'Denver':
+      return "D";
+    case 'San Francisco':
+      return "S";
+		default:
+			return mint;
+	}
+}

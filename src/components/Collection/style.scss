@@ -27,6 +27,10 @@
     &:nth-child(odd) {
       background-color: #fff;
     }
+
+    &:hover {
+      background-color: lighten($brandedAlt, 30%);
+    }
   }
 
   .add-buttons {

@@ -8,13 +8,16 @@ class Issues extends React.Component {
       <div className="issues-container">
         <nav>
           <ul>
+            <li><NavLink to="/collection/1+2+3+4+5">Half Cent</NavLink></li>
+
             <li><NavLink to="/collection/6+7+8+9+10+11+12">Large Cent</NavLink></li>
             <li><NavLink to="/collection/13+14+15+16">Indian Head Cent</NavLink></li>
             <li><NavLink to="/collection/17+18+19+20+21+22+23+24+25+26+27">Lincoln Cent</NavLink></li>
 
             <li><NavLink to="/collection/28">2 Piece Cent</NavLink></li>
 
-            <li><NavLink to="/collection/29+30+31+32">3 Piece Cent</NavLink></li>
+            <li><NavLink to="/collection/29+30+31">3 Piece Cent (Silver)</NavLink></li>
+            <li><NavLink to="/collection/32">3 Piece Cent (Copper)</NavLink></li>
 
             <li><NavLink to="/collection/33+34+35+36">Older Nickels</NavLink></li>
             <li><NavLink to="/collection/37+38+39+40+41+42+43">Seated Liberty Nickels</NavLink></li>
@@ -22,13 +25,12 @@ class Issues extends React.Component {
             <li><NavLink to="/collection/46+47">Libery (V) Nickels</NavLink></li>
             <li><NavLink to="/collection/48+49">Buffalo Nickels</NavLink></li>
             <li><NavLink to="/collection/50+51+52+53+54+55+56+57">Jefferson Nickels</NavLink></li>
-            <li><NavLink to="/collection/50+51+52+53+54+55+56+57">Jefferson Nickels</NavLink></li>
 
             <li><NavLink to="/collection/58+59+60+61">Older Dimes</NavLink></li>
             <li><NavLink to="/collection/62+63+64+65+66+67+68+69">Seated Liberty Dimes</NavLink></li>
             <li><NavLink to="/collection/70">Barber Dimes</NavLink></li>
             <li><NavLink to="/collection/71">Mercury Dimes</NavLink></li>
-            <li><NavLink to="/collection/72+73">Roosevelt</NavLink></li>
+            <li><NavLink to="/collection/72+73">Roosevelt Dimes</NavLink></li>
 
             <li><NavLink to="/collection/74">20 Cent Piece</NavLink></li>
 

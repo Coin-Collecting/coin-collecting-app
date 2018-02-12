@@ -53,3 +53,7 @@ cd /home/coin-collecting/db
 
 ### Dump DB
 ```mysqldump -u [uname] -p[pass] db_name > db_backup.sql```
+
+
+### EBAY API
+http://developer.ebay.com/DevZone/finding/HowTo/GettingStarted_JS_NV_JSON/GettingStarted_JS_NV_JSON.html#step1

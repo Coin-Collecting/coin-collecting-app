@@ -5,10 +5,11 @@ import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import Spinner from '../Spinner';
 import './style.scss';
+import { abbreviateMint } from '../../util';
 
 import { coinQualities } from '../../constants';
 
-const DEFAULT_COUNT = 20;
+const DEFAULT_COUNT = 50;
 
 const CoinsQuery = gql`
     query (
@@ -41,21 +42,11 @@ const CoinsQuery = gql`
                     }
                     issue {
                         id
-                        variety
                         composition
-                        mass
-                        diameter
-                        startYear
-                        endYear
-                        denomination {
-                            id
-                            val
-                            kind
-                        }
+                        variety
                     }
                     mint
                     mintage
-                    description
                 }
             }
         }
@@ -85,6 +76,13 @@ const RemoveCoinMutation = gql`
 `;
 
 class Collection extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: DEFAULT_COUNT,
+    }
+  }
+
   render() {
     const {
       coinsData: { loading, coins },
@@ -95,17 +93,44 @@ class Collection extends React.Component {
     } = this.props;
     if (loading) return (<Spinner />);
 
-    console.log(coins);
-
     return (
       <div className="collection-container">
+        {/*<div className="filters">*/}
+          {/*<label>*/}
+            {/*<input*/}
+              {/*type="checkbox"*/}
+              {/*checked={this.state.owned}*/}
+              {/*onClick={() => this.setState({owned: !this.state.owned})}*/}
+            {/*/>*/}
+            {/*Owned*/}
+          {/*</label>*/}
+          {/*<label>*/}
+            {/*<input*/}
+              {/*type="checkbox"*/}
+              {/*checked={this.state.notOwned}*/}
+              {/*onClick={() => this.setState({notOwned: !this.state.notOwned})}*/}
+            {/*/>*/}
+            {/*Not Owned*/}
+          {/*</label>*/}
+          {/*<label>*/}
+            {/*<select*/}
+              {/*value={this.state.count}*/}
+              {/*onChange={({target: { value }}) => this.setState({count: value})}*/}
+            {/*>*/}
+              {/*<option value={20}>20</option>*/}
+              {/*<option value={50}>50</option>*/}
+              {/*<option value={75}>75</option>*/}
+              {/*<option value={100}>100</option>*/}
+            {/*</select>*/}
+          {/*</label>*/}
+        {/*</div>*/}
       <table>
         <thead>
           <tr>
             <th>Year</th>
-            <th>Mint</th>
             <th>Variety</th>
             <th>Mintage</th>
+            <th>Composition</th>
             <th>Owned</th>
             <th>Actions</th>
             <th>Ebay</th>
@@ -117,10 +142,10 @@ class Collection extends React.Component {
             const { id, year, mint, owned, issue, mintage } = coin.node;
             return (
               <tr key={id}>
-                <td>{ year }</td>
-                <td>{ mint }</td>
+                <td>{ year } { abbreviateMint(mint) }</td>
                 <td>{ issue.variety }</td>
                 <td>{ mintage }</td>
+                <td>{ issue.composition }</td>
                 <td>
                   {
                     owned.length > 0 && owned.map(coin => {
