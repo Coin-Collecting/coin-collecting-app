@@ -5,13 +5,6 @@ let config = {
     }
   },
   production: {
-    url: 'http://www.mycoin.store',
-    db: {
-      host:   'localhost',
-      port:   '3306',
-      user:     'root',
-      pass:     'Dalekini21'
-    },
     api: {
       url: 'http://api.mycoin.store/graphql',
     }
