@@ -7,7 +7,7 @@ let DashboardPlugin = require('webpack-dashboard/plugin');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const HOST = process.env.HOST || "127.0.0.1";
-const PORT = process.env.PORT || "8888";
+const PORT = process.env.PORT || "8080";
 
 let config = require('./config')['development'];
 
@@ -37,6 +37,7 @@ module.exports = {
   devServer: {
     contentBase: "./public",
     // do not print bundle build stats
+    disableHostCheck: true,
     noInfo: true,
     // enable HMR
     hot: true,
