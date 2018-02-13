@@ -9,7 +9,7 @@ let ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HOST = process.env.HOST || "127.0.0.1";
 const PORT = process.env.PORT || "8888";
 
-let config = require('./config')[process.env.NODE_ENV];
+let config = require('./config')['development'];
 
 loaders.push({
   test: /\.scss$/,
@@ -37,7 +37,6 @@ module.exports = {
   devServer: {
     contentBase: "./public",
     // do not print bundle build stats
-    disableHostCheck: true,
     noInfo: true,
     // enable HMR
     hot: true,
