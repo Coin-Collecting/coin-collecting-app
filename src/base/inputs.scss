@@ -115,28 +115,6 @@ select {
   }
 }
 
-button {
-  box-sizing: border-box;
-  height: 40px;
-  border-top: solid 2px transparent;
-  border-right: solid 2px transparent;
-  border-bottom: solid 2px darken($lightGray, 20);
-  border-left: solid 2px transparent;
-  border-radius: 3px;
-  background-color: $lightGray;
-  color: #fff;
-  font-weight: 600;
-  outline: none;
-  cursor: pointer;
-
-  &:disabled {
-    cursor: not-allowed;
-    background-color: $disabled;
-    border-bottom: solid 2px transparent;
-    color: $lightGray;
-  }
-}
-
 .error-msg {
   color: $secondaryColor;
   font-size: 12px;

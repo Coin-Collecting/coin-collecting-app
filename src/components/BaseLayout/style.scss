@@ -1,0 +1,32 @@
+.base-layout-component {
+  $headerHeight: 60px;
+  $footerHeight: 250px;
+  $bodyHeight: calc(100vh - 60px - 250px);
+
+  >div {
+    &:first-child {
+      position: fixed;
+      height: $headerHeight;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    &:nth-child(2) {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      height: $bodyHeight;
+      overflow-y: scroll;
+    }
+
+    &:nth-child(3) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: $footerHeight;
+    }
+  }
+}

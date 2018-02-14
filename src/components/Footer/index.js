@@ -4,13 +4,14 @@ import './style.scss';
 class Footer extends React.Component {
   render() {
     return (
-      <header className="global-footer">
-        Footer
-      </header>
+      <footer className="global-footer">
+
+      </footer>
     );
   }
 }
 
-Footer.propTypes = {};
+Footer.propTypes = {
+};
 
 export default Footer;

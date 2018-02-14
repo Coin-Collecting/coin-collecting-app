@@ -7,5 +7,11 @@ export const coinQualities = [
   'XF',
   'AU',
   'PROOF',
-  'Not Graded'
+  'MS68',
+  'MINTSET',
+  'Special',
+  'Clip',
+  'Not Graded',
 ];
+
+export const S3_URL = 'http://s3.mycoin.store/';

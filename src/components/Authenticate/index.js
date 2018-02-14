@@ -7,7 +7,7 @@ import log from '../../middleware/logging';
 
 import Login from '../Login';
 
-import { updateToken } from '../../actions/authentication';
+import { updateToken, updateUser } from '../../actions/authentication';
 
 const loginMutation = gql`
     mutation (
@@ -18,6 +18,16 @@ const loginMutation = gql`
             username: $username,
             password: $password,
         )
+    }
+`;
+
+const MeQuery = gql`
+    query {
+        me {
+            username
+            email
+            admin
+        }
     }
 `;
 
@@ -34,6 +44,12 @@ class Authenticate extends React.Component {
           log.error({ err });
         });
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.me.me && nextProps.me.me.username && nextProps.authentication.user.username !== nextProps.me.me.username) {
+      this.props.updateUser(nextProps.me.me);
+    }
   }
 
   render() {
@@ -57,6 +73,7 @@ class Authenticate extends React.Component {
 
 Authenticate.propTypes = {
   updateToken: PropTypes.func,
+  updateUser: PropTypes.func,
   loginUser: PropTypes.func,
   authentication: PropTypes.shape({
     token: PropTypes.string,
@@ -72,6 +89,7 @@ Authenticate.defaultProps = {
     token: undefined,
   },
   updateToken: () => false,
+  updateUser: () => false,
   loginUser: () => false,
   children: [],
 };
@@ -88,6 +106,9 @@ const mapDispatchToProps = dispatch => {
     updateToken: ({ token }) => {
       dispatch(updateToken({ token }));
     },
+    updateUser: user => {
+      dispatch(updateUser(user));
+    }
   };
 };
 
@@ -107,4 +128,5 @@ export default compose(
     mapDispatchToProps,
   ),
   loginMutationQuery,
+  graphql(MeQuery, {name: 'me',}),
 )(Authenticate);

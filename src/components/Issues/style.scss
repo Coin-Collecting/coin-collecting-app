@@ -10,19 +10,35 @@
     list-style: none;
   }
 
-  li {
-    display: inline-block;
-    margin: 10px;
-  }
-
   a {
     color: #000;
     text-decoration: underline;
+    display: block;
+    margin: 20px 15px 20px 32px;
+    font-size: 16px;
+
+    &:hover {
+      color: $primaryColor;
+    }
   }
 
   .active {
     color: $primaryColor;
     text-decoration: none;
     font-weight: bold;
+  }
+
+  details {
+    outline: none;
+  }
+
+  summary {
+    font-size: 20px;
+    color: #000;
+    outline: none;
+    cursor: s-resize;
+    padding: 20px 10px 10px;
+    background-color: #f4f4f4;
+    margin: 5px 0;
   }
 }

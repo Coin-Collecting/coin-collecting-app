@@ -2,14 +2,23 @@
 
 .collection-container {
   margin: 0;
+  position: relative;
+  padding: 20px;
+
+  .spinner-container {
+    margin-top: 200px;
+  }
 
   table {
+    margin-top: 50px;
     width: 100%;
+    border-collapse: collapse;
   }
 
   td,
   th {
     padding: 10px;
+    border: solid 1px #fff;
   }
 
   thead {
@@ -21,8 +30,10 @@
       background-color: $primaryColor;
     }
   }
+
   tbody tr {
     background-color: lighten($brandedAlt, 35%);
+    cursor: pointer;
 
     &:nth-child(odd) {
       background-color: #fff;
@@ -31,11 +42,13 @@
     &:hover {
       background-color: lighten($brandedAlt, 30%);
     }
-  }
 
-  .add-buttons {
-    button {
-      margin-right: 3px;
+    &.active {
+      background-color: #5387fd;
+
+      td {
+        border: solid 1px #5c5c5c;
+      }
     }
   }
 
@@ -47,8 +60,35 @@
     color: $secondaryColor;
   }
 
+  .add-buttons {
+    position: sticky;
+    top: 0;
+    padding-top: 5px;
+
+    button {
+      font-size: 18px;
+      transition: ease all .3s;
+      padding: 10px 20px;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:disabled {
+        opacity: .8;
+        background-color: #ededed;
+        border-color: darken(#ededed, 15%);
+        color: darken(#ededed, 25%);
+
+        &:hover {
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
   .pagination {
-    padding: 20px 0;
+    padding: 10px 0 10px;
     text-align: center;
 
     a {
@@ -69,29 +109,53 @@
     &:hover {
       cursor: not-allowed;
     }
+  }
 
-    &.AG,
-    &.G,
-    &.VG {
-      background-color: $secondaryColor;
-      color: $brandedWhite;
-    }
+  .AG,
+  .G,
+  .VG {
+    background-color: $secondaryColor;
+    border: solid 1px darken($secondaryColor, 15%);
+    color: $brandedWhite;
+  }
 
-    &.F,
-    &.VF,
-    &.XF {
-      background-color: $primaryColor;
-      color: $brandedWhite;
-    }
+  .F,
+  .VF,
+  .XF {
+    background-color: $primaryColor;
+    border: solid 1px darken($primaryColor, 15%);
+    color: $brandedWhite;
+  }
 
-    &.AU,
-    &.PROOF {
-      background-color: $brandedAlt;
-      color: $brandedWhite;
-    }
+  .AU,
+  .PROOF {
+    background-color: $brandedAlt;
+    border: solid 1px darken($brandedAlt, 15%);
+    color: $brandedWhite;
+  }
 
-    &.Not-Graded {
-      background-color: #f0f0f0;
-    }
+  .MS68 {
+    background-color: $brandedYellow;
+    border: solid 1px darken($brandedYellow, 15%);
+    color: $brandedWhite;
+  }
+
+  .MINTSET {
+    background-color: $brandedBlue;
+    border: solid 1px darken($brandedBlue, 15%);
+    color: $brandedWhite;
+  }
+
+  .Not.Graded,
+  .Not-Graded,
+  .Clip {
+    background-color: #ffffff;
+    border: solid 1px darken(#ffffff, 15%);
+  }
+
+  .Special {
+    background-color: $darkGray;
+    border: solid 1px darken($darkGray, 15%);
+    color: $brandedWhite;
   }
 }

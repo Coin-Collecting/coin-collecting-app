@@ -9,6 +9,8 @@ import { abbreviateMint } from '../../util';
 
 import { coinQualities } from '../../constants';
 
+import IssueImage from '../IssueImage';
+
 const DEFAULT_COUNT = 50;
 
 const CoinsQuery = gql`
@@ -80,7 +82,25 @@ class Collection extends React.Component {
     super(props);
     this.state = {
       count: DEFAULT_COUNT,
+      selectedIds: [],
     }
+  }
+
+  toggleRow(id) {
+    let newIds = this.state.selectedIds;
+    let newId = null;
+
+    if (!this.isSelected(id)) {
+      newId = id;
+    }
+
+    this.setState({
+      selectedIds: [newId],
+    })
+  }
+
+  isSelected(id) {
+    return this.state.selectedIds.indexOf(id) !== -1;
   }
 
   render() {
@@ -90,131 +110,142 @@ class Collection extends React.Component {
       page,
       addCoin,
       removeCoin,
+      match: { params },
     } = this.props;
-    if (loading) return (<Spinner />);
+
+    const AddButtons = () => (
+      <div className="add-buttons">
+        { coinQualities.map((quality, index) => {
+          return (
+            <button
+              key={index}
+              disabled={!this.state.selectedIds[0]}
+              className={quality}
+              onClick={() => {
+                if (this.state.selectedIds[0] != '') {
+                  addCoin({
+                    coinId: this.state.selectedIds[0],
+                    quality: quality,
+                  })
+                    .then(() => {
+                      this.props.coinsData.refetch();
+                      this.setState({
+                        selectedIds: [],
+                      })
+                    })
+                }
+              }}
+            >
+              { quality }
+            </button>
+          )
+        })}
+      </div>
+    );
+
+    const Paginate = () => {
+      if (coins && parseInt(page) - 1 > 0 ||
+        coins && coins.pageInfo.hasNextPage) {
+        return (
+          <div className="pagination">
+            { coins && parseInt(page) - 1 > 0 &&
+            <Link to={`/collection/${issueId}/${parseInt(page) - 1}`}>
+              <i className="fa fa-caret-left"/> Prev Page
+            </Link>
+            }
+            { coins && coins.pageInfo.hasNextPage &&
+            <Link to={`/collection/${issueId}/${parseInt(page) + 1}`}>
+              Next Page <i className="fa fa-caret-right"/>
+            </Link>
+            }
+          </div>
+        );
+      }
+      return null;
+    };
+
+    const Owned = ({owned}) => {
+      return (
+        <div>
+          {
+            owned.length > 0 && owned.map(coin => {
+              return (
+                <span
+                  key={coin.id}
+                  onClick={() => {
+                    removeCoin({id: coin.id})
+                      .then(() => {
+                        this.props.coinsData.refetch();
+                      })
+                  }}
+                  className={[
+                    "owned",
+                    coin.quality.replace(/ /g, '-')
+                  ].join(' ')}
+                >
+              {coin.quality}
+            </span>
+              )
+            })
+          }
+        </div>
+      );
+    }
+
+    if (loading) return (
+      <div className="collection-container">
+        <IssueImage issueId={params.issueId} />
+        <AddButtons />
+        <Spinner />
+      </div>
+    );
 
     return (
       <div className="collection-container">
-        {/*<div className="filters">*/}
-          {/*<label>*/}
-            {/*<input*/}
-              {/*type="checkbox"*/}
-              {/*checked={this.state.owned}*/}
-              {/*onClick={() => this.setState({owned: !this.state.owned})}*/}
-            {/*/>*/}
-            {/*Owned*/}
-          {/*</label>*/}
-          {/*<label>*/}
-            {/*<input*/}
-              {/*type="checkbox"*/}
-              {/*checked={this.state.notOwned}*/}
-              {/*onClick={() => this.setState({notOwned: !this.state.notOwned})}*/}
-            {/*/>*/}
-            {/*Not Owned*/}
-          {/*</label>*/}
-          {/*<label>*/}
-            {/*<select*/}
-              {/*value={this.state.count}*/}
-              {/*onChange={({target: { value }}) => this.setState({count: value})}*/}
-            {/*>*/}
-              {/*<option value={20}>20</option>*/}
-              {/*<option value={50}>50</option>*/}
-              {/*<option value={75}>75</option>*/}
-              {/*<option value={100}>100</option>*/}
-            {/*</select>*/}
-          {/*</label>*/}
-        {/*</div>*/}
-      <table>
-        <thead>
-          <tr>
-            <th>Year</th>
-            <th>Variety</th>
-            <th>Mintage</th>
-            <th>Composition</th>
-            <th>Owned</th>
-            <th>Actions</th>
-            <th>Ebay</th>
-          </tr>
-        </thead>
-        <tbody>
-        {
-          coins && coins.edges && coins.edges.map(coin => {
-            const { id, year, mint, owned, issue, mintage } = coin.node;
-            return (
-              <tr key={id}>
-                <td>{ year } { abbreviateMint(mint) }</td>
-                <td>{ issue.variety }</td>
-                <td>{ mintage }</td>
-                <td>{ issue.composition }</td>
-                <td>
-                  {
-                    owned.length > 0 && owned.map(coin => {
-                      return (
-                        <span
-                          key={coin.id}
-                          onClick={() => {
-                            removeCoin({id: coin.id})
-                              .then(() => {
-                                this.props.coinsData.refetch();
-                              })
-                          }}
-                          className={[
-                            "owned",
-                            coin.quality.replace(/ /g, '-')
-                          ].join(' ')}
-                        >
-                          {coin.quality}
-                        </span>
-                      )
-                    })
-                  }
-                </td>
-                <td>
-                  <div className="add-buttons">
-                    { coinQualities.map((quality, index) => {
-                      return (
-                        <button
-                          key={index}
-                          onClick={() => {
-                            addCoin({coinId: id, quality: quality})
-                              .then(() => {
-                                this.props.coinsData.refetch();
-                              })
-                          }}
-                        >
-                          { quality }
-                        </button>
-                      )
-                    })}
-                  </div>
-                </td>
-                <td>
-                  <a
-                    className="ebay"
-                    target="_blank"
-                    href={`https://www.ebay.com/sch/i.html?_nkw=${year}+${mint}+${issue.variety.replace(/ /g, '+')}&LH_BIN=1&_sop=15`}
-                  >
-                    <i className="fa fa-gavel"/>
-                  </a>
-                </td>
-              </tr>
-            )
-          })
-        }
-        </tbody>
-      </table>
-      <div className="pagination">
-        { coins && parseInt(page) - 1 > 0 &&
-          <Link to={`/collection/${issueId}/${parseInt(page) - 1}`} >
-            <i className="fa fa-caret-left"/> Prev Page
-          </Link>
-        }
-        { coins && coins.pageInfo.hasNextPage &&
-          <Link to={`/collection/${issueId}/${parseInt(page) + 1}`} >
-            Next Page <i className="fa fa-caret-right"/>
-          </Link>
-        }
-      </div>
+        <IssueImage issueId={params.issueId} />
+        <AddButtons />
+        <table>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Owned</th>
+              <th>Variety</th>
+              <th>Mintage</th>
+              <th>Composition</th>
+              <th>Ebay</th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            coins && coins.edges && coins.edges.map(coin => {
+              const { id, year, mint, owned, issue, mintage } = coin.node;
+              return (
+                <tr
+                  key={id}
+                  onClick={() => this.toggleRow(id)}
+                  className={this.isSelected(id) ? 'active' : null}
+                >
+                  <td>{ year } { abbreviateMint(mint) }</td>
+                  <td><Owned owned={owned} /></td>
+                  <td>{ issue.variety }</td>
+                  <td>{ mintage }</td>
+                  <td>{ issue.composition }</td>
+                  <td>
+                    <a
+                      className="ebay"
+                      target="_blank"
+                      href={`https://www.ebay.com/sch/i.html?_nkw=${year}+${mint}+${issue.variety.replace(/ /g, '+')}&LH_BIN=1&_sop=15`}
+                    >
+                      <i className="fa fa-gavel"/>
+                    </a>
+                  </td>
+                </tr>
+              )
+            })
+          }
+          </tbody>
+        </table>
+        <Paginate/>
       </div>
     );
   }
