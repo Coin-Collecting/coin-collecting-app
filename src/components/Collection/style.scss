@@ -111,6 +111,23 @@
     }
   }
 
+  .fa-heart {
+    color: $lightestGray;
+    cursor: pointer;
+
+    &:hover {
+      color: $secondaryColor;
+    }
+
+    &.active {
+      color: $secondaryColor;
+
+      &:hover {
+        color: $lightestGray;
+      }
+    }
+  }
+
   .AG,
   .G,
   .VG {

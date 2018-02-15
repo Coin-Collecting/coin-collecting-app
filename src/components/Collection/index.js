@@ -6,10 +6,16 @@ import { Link } from 'react-router-dom';
 import Spinner from '../Spinner';
 import './style.scss';
 import { abbreviateMint } from '../../util';
+import _Find from 'lodash/find';
 
+import {
+  AddCoinMutation,
+  RemoveCoinMutation,
+  AddToWishListMutation,
+  RemoveFromWishListMutation,
+  MeQuery,
+} from '../../queries-mutations';
 import { coinQualities } from '../../constants';
-
-import IssueImage from '../IssueImage';
 
 const DEFAULT_COUNT = 50;
 
@@ -55,28 +61,6 @@ const CoinsQuery = gql`
     }
 `;
 
-const AddCoinMutation = gql`
-    mutation (
-    $coinId: String!,
-    $quality: String!,
-    ) {
-        addUserCoin (
-            coinId: $coinId,
-            quality: $quality,
-        )
-    }
-`;
-
-const RemoveCoinMutation = gql`
-    mutation (
-    $id: String!,
-    ) {
-        removeUserCoin (
-            id: $id,
-        )
-    }
-`;
-
 class Collection extends React.Component {
   constructor(props) {
     super(props);
@@ -104,14 +88,22 @@ class Collection extends React.Component {
   }
 
   render() {
-    const {
+    let {
       coinsData: { loading, coins },
       issueId,
       page,
       addCoin,
       removeCoin,
       match: { params },
+      addToWishList,
+      removeFromWishList,
+      user,
     } = this.props;
+
+    const isWished = coinId => {
+      if (user.loading) return false;
+      return _Find(user.me.wishes, {id: coinId}) !== undefined;
+    }
 
     const AddButtons = () => (
       <div className="add-buttons">
@@ -194,7 +186,6 @@ class Collection extends React.Component {
 
     if (loading) return (
       <div className="collection-container">
-        <IssueImage issueId={params.issueId} />
         <AddButtons />
         <Spinner />
       </div>
@@ -202,11 +193,11 @@ class Collection extends React.Component {
 
     return (
       <div className="collection-container">
-        <IssueImage issueId={params.issueId} />
         <AddButtons />
         <table>
           <thead>
             <tr>
+              <th>Wishlist</th>
               <th>Year</th>
               <th>Owned</th>
               <th>Variety</th>
@@ -222,9 +213,28 @@ class Collection extends React.Component {
               return (
                 <tr
                   key={id}
-                  onClick={() => this.toggleRow(id)}
+                  onClick={({target}) => {
+                    if (
+                      new RegExp("fa").test(target.className) ||
+                      new RegExp("owned").test(target.className)
+                    ) return false;
+                    this.toggleRow(id);
+                  }}
                   className={this.isSelected(id) ? 'active' : null}
                 >
+                  <td>
+                    <i
+                      className={[
+                        "fa fa-heart",
+                        isWished(id) ? 'active' : null,
+                      ].join(' ')}
+                      onClick={() => {
+                        isWished(id)
+                          ? removeFromWishList(id).then(() => user.refetch())
+                          : addToWishList(id).then(() => user.refetch());
+                      }}
+                    />
+                  </td>
                   <td>{ year } { abbreviateMint(mint) }</td>
                   <td><Owned owned={owned} /></td>
                   <td>{ issue.variety }</td>
@@ -234,7 +244,7 @@ class Collection extends React.Component {
                     <a
                       className="ebay"
                       target="_blank"
-                      href={`https://www.ebay.com/sch/i.html?_nkw=${year}+${mint}+${issue.variety.replace(/ /g, '+')}&LH_BIN=1&_sop=15`}
+                      href={`https://www.ebay.com/sch/i.html?_nkw=${year}+${abbreviateMint(mint)}+${issue.variety.replace(/ /g, '+')}&LH_BIN=1&_sop=15`}
                     >
                       <i className="fa fa-gavel"/>
                     </a>
@@ -255,14 +265,20 @@ Collection.propTypes = {
   coinsData: PropTypes.shape({
     collection: PropTypes.array,
   }),
+  user: PropTypes.object.isRequired,
   addCoin: PropTypes.func.isRequired,
   removeCoin: PropTypes.func.isRequired,
+  addToWishList: PropTypes.func.isRequired,
+  removeFromWishList: PropTypes.func.isRequired,
 };
 
 Collection.defaultProps = {
   coinsData: {},
+  user: {},
   addCoin: () => false,
   removeCoin: () => false,
+  addToWishList: () => false,
+  removeFromWishList: () => false,
 };
 
 const coinsQuery = graphql(CoinsQuery, {
@@ -298,8 +314,31 @@ const removeCoinMutation = graphql(RemoveCoinMutation, {
   }),
 });
 
+const addToWishListMutation = graphql(AddToWishListMutation, {
+  props: ({ mutate }) => ({
+    addToWishList: id => {
+      return mutate({
+        variables: {coinId: id},
+      });
+    },
+  }),
+});
+
+const removeFromWishListMutation = graphql(RemoveFromWishListMutation, {
+  props: ({ mutate }) => ({
+    removeFromWishList: id => {
+      return mutate({
+        variables: {id},
+      });
+    },
+  }),
+});
+
 export default compose(
   coinsQuery,
   addCoinMutation,
   removeCoinMutation,
+  addToWishListMutation,
+  removeFromWishListMutation,
+  graphql(MeQuery, {name: 'user'}),
 )(Collection);

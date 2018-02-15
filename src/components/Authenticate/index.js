@@ -1,37 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
 import { graphql, compose } from 'react-apollo';
 import { connect } from 'react-redux';
 import log from '../../middleware/logging';
 
 import Login from '../Login';
+import { loginMutation, MeQuery } from '../../queries-mutations';
 
 import { updateToken, updateUser } from '../../actions/authentication';
-
-const loginMutation = gql`
-    mutation (
-    $username: String!,
-    $password: String!,
-    ) {
-        loginUser (
-            username: $username,
-            password: $password,
-        )
-    }
-`;
-
-const MeQuery = gql`
-    query {
-        me {
-            username
-            email
-            admin
-            totalOwned
-            totalUniqueOwned
-        }
-    }
-`;
 
 class Authenticate extends React.Component {
   constructor(props) {
@@ -40,6 +16,7 @@ class Authenticate extends React.Component {
       this.props.loginUser({ username, password })
         .then(({ data: { loginUser } }) => {
           this.props.updateToken({ token: loginUser });
+          this.props.user.refetch();
         })
         .catch(err => {
           // TODO: Add visual error handling
@@ -48,10 +25,9 @@ class Authenticate extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    // LOL - no comment and too lazy
-    if (nextProps.user.me && nextProps.user.me.username && nextProps.authentication && nextProps.authentication.user && nextProps.authentication.user.username !== nextProps.user.me.username) {
-      this.props.updateUser(nextProps.user.me);
+  componentWillReceiveProps({ user }) {
+    if (this.props.user.loading && !user.loading) {
+      this.props.updateUser(user.me);
     }
   }
 

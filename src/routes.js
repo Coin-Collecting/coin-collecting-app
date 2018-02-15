@@ -49,7 +49,6 @@ export const routes = (
 							</Section>
 						</Authenticate>
 					</Main>
-					<Footer {...props}/>
 				</BaseLayout>
 			)
 		}}>

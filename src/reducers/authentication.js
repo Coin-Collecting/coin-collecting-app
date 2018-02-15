@@ -3,7 +3,7 @@ import { UPDATE_USER } from '../actions/authentication';
 
 const initialState = {
   token: localStorage.getItem('token'),
-  user: JSON.parse(localStorage.getItem('coinUser')),
+  user: undefined,
 };
 
 export default function (state = initialState, action) {
@@ -16,8 +16,6 @@ export default function (state = initialState, action) {
       };
     }
     case UPDATE_USER: {
-      localStorage.setItem('coinUser', action.user);
-
       return {
         token: state.token,
         user: action.user,

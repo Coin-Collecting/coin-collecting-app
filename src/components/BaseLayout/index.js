@@ -3,8 +3,8 @@ import './style.scss';
 
 class BaseLayout extends React.Component {
   render() {
-    if (React.Children.count(this.props.children) !== 3) {
-      console.error('BaseLayout requires exactly three children');
+    if (React.Children.count(this.props.children) !== 2) {
+      console.error('BaseLayout requires exactly two children');
     }
     if (React.Children.count(this.props.children) > 1) {
       return (
@@ -15,7 +15,6 @@ class BaseLayout extends React.Component {
         </div>
       );
     }
-
   }
 }
 

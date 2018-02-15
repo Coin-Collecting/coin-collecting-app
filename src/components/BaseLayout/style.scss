@@ -1,7 +1,6 @@
 .base-layout-component {
   $headerHeight: 60px;
-  $footerHeight: 250px;
-  $bodyHeight: calc(100vh - 60px - 250px);
+  $bodyHeight: calc(100vh - 60px);
 
   >div {
     &:first-child {
@@ -19,14 +18,6 @@
       right: 0;
       height: $bodyHeight;
       overflow-y: scroll;
-    }
-
-    &:nth-child(3) {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: $footerHeight;
     }
   }
 }

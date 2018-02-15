@@ -33,6 +33,31 @@ export const abbreviateMint = mint => {
 	}
 }
 
+export const denominationName = val => {
+  switch (val) {
+    case '0.005':
+      return "Half Cent";
+    case '0.01':
+      return "1 Cent";
+    case '0.02':
+      return "2 Cent Piece";
+    case '0.03':
+      return "3 Cent Piece";
+    case '0.05':
+      return "Nickel";
+    case '0.10':
+      return "Dime";
+    case '0.25':
+      return "Quarter";
+    case '0.50':
+      return "Half Dollar";
+    case '1.00':
+      return "Dollar";
+		default:
+			return val;
+  }
+}
+
 export const issueIds = [
 	{
 		slug: 'half-cent',
