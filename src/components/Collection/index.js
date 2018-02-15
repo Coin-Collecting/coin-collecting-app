@@ -14,7 +14,7 @@ import {
   RemoveFromWishListMutation,
   MeQuery,
 } from '../../queries-mutations';
-import { coinQualities } from '../../constants';
+import { coinQualities, getNameByIssueIds } from '../../constants';
 
 const DEFAULT_COUNT = 50;
 
@@ -141,12 +141,12 @@ class Collection extends React.Component {
         return (
           <div className="pagination">
             { coins && parseInt(page) - 1 > 0 &&
-            <Link to={`/collection/${issueId}/${parseInt(page) - 1}`}>
+            <Link to={`/collection/${getNameByIssueIds(issueId)}/${parseInt(page) - 1}`}>
               <i className="fa fa-caret-left"/> Prev Page
             </Link>
             }
             { coins && coins.pageInfo.hasNextPage &&
-            <Link to={`/collection/${issueId}/${parseInt(page) + 1}`}>
+            <Link to={`/collection/${getNameByIssueIds(issueId)}/${parseInt(page) + 1}`}>
               Next Page <i className="fa fa-caret-right"/>
             </Link>
             }
