@@ -27,6 +27,8 @@ const MeQuery = gql`
             username
             email
             admin
+            totalOwned
+            totalUniqueOwned
         }
     }
 `;
@@ -47,8 +49,9 @@ class Authenticate extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.me.me && nextProps.me.me.username && nextProps.authentication.user.username !== nextProps.me.me.username) {
-      this.props.updateUser(nextProps.me.me);
+    // LOL - no comment and too lazy
+    if (nextProps.user.me && nextProps.user.me.username && nextProps.authentication && nextProps.authentication.user && nextProps.authentication.user.username !== nextProps.user.me.username) {
+      this.props.updateUser(nextProps.user.me);
     }
   }
 
@@ -128,5 +131,5 @@ export default compose(
     mapDispatchToProps,
   ),
   loginMutationQuery,
-  graphql(MeQuery, {name: 'me',}),
+  graphql(MeQuery, {name: 'user'}),
 )(Authenticate);

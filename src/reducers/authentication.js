@@ -3,7 +3,7 @@ import { UPDATE_USER } from '../actions/authentication';
 
 const initialState = {
   token: localStorage.getItem('token'),
-  user: localStorage.getItem('coinUser'),
+  user: JSON.parse(localStorage.getItem('coinUser')),
 };
 
 export default function (state = initialState, action) {
