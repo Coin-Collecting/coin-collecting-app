@@ -32,7 +32,9 @@ const seatedLibertyQuarter = 'img/issues/libertySeatedQuarter.jpg';
 const barberQuarter = 'img/issues/barberQuarter.jpg';
 const standingLibertyQuarter = 'img/issues/standingLibertyQuarter.jpg';
 const washingtonQuarter = 'img/issues/washingtonQuarter.jpg';
-const stateQuarter = 'img/issues/stateQuarter.jpg'
+const stateQuarter = 'img/issues/stateQuarter.jpg';
+const parkQuarter = 'img/issues/quarter-parks-001.jpg';
+const parkQuarter2 = 'img/issues/quarter-parks-002.jpg';
 const barberHalf = 'img/issues/barberHalf.jpg';
 const walkingHalf = 'img/issues/walkingLibertyHalf.jpg';
 const franklinHalf = 'img/issues/franklinHalf.jpg';
@@ -77,7 +79,8 @@ const images = {
   '222': [peaceDollar],
   '223+224+225+226': [eisenhowerDollar],
   '227': [susanDollar],
-  '228+237+242+247+252+257+262+267+272+276': [sacagaweaDollar]
+  '228+237+242+247+252+257+262+267+272+276': [sacagaweaDollar],
+  '150+151+152+153+154+155+156+157+158+159+160+161+162+163+164+165+166+167+168+169+170+171+172+173+174+175+176+177+178+179+180+181+182+183+184+185+186+187+188+189+190': [parkQuarter, parkQuarter2],
 };
 
 class IssueImage extends React.Component {
