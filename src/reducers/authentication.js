@@ -1,5 +1,6 @@
 import { UPDATE_TOKEN } from '../actions/authentication';
 import { UPDATE_USER } from '../actions/authentication';
+import { LOGOUT } from '../actions/authentication';
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -13,6 +14,14 @@ export default function (state = initialState, action) {
 
       return {
         token: action.token,
+      };
+    }
+
+    case LOGOUT: {
+      localStorage.removeItem('token');
+
+      return {
+        token: undefined,
       };
     }
     case UPDATE_USER: {

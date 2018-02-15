@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './style.scss';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Login extends React.Component {
@@ -16,27 +17,35 @@ class Login extends React.Component {
     const { username, password } = this.state;
 
     return (
-      <aside className="login-container">
-        <h2>Login!</h2>
-        <input
-          type="text"
-          value={username}
-          onChange={({ target: { value } }) => {
-            this.setState({ username: value });
-          }}
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={({ target: { value } }) => {
-            this.setState({ password: value });
-          }}
-        />
-        <button
-          onClick={() => onSubmit({ username, password })}
-        >
-          Login Here
-        </button>
+      <aside
+        className="login-container"
+        style={{
+          backgroundImage: `url(${'http://s3.mycoin.store/img/coin-background-large.jpg'})`
+        }}
+      >
+        <div className="container">
+          <input
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={({ target: { value } }) => {
+              this.setState({ username: value });
+            }}
+          />
+          <input
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={({ target: { value } }) => {
+              this.setState({ password: value });
+            }}
+          />
+          <button
+            onClick={() => onSubmit({ username, password })}
+          >
+            Login Here
+          </button>
+        </div>
       </aside>
     );
   }

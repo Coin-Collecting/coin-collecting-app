@@ -21,6 +21,8 @@ import Collection from '../components/Collection';
 import Authenticate from '../components/Authenticate';
 import Issues from '../components/Issues';
 
+import Logout from '../components/Logout';
+
 export const routes = (
 	<Router>
 		<Route render={props => {
@@ -50,6 +52,7 @@ export const routes = (
                 </Switch>
 							</Section>
 						</Authenticate>
+						<Route exact path="/logout" component={Logout} />
 					</Main>
 				</BaseLayout>
 			)

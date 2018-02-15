@@ -34,6 +34,17 @@
     line-height: 60px;
     padding-right: 30px;
 
+    a {
+      display: inline-block;
+      margin-left: 15px;
+      background-color: $secondaryColor;
+      padding: 0 15px;
+      line-height: 40px;
+      border: solid 1px darken($secondaryColor, 25%);
+      border-radius: 10px;
+
+    }
+
     .user-name {
       font-weight: bold;
     }

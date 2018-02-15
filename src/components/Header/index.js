@@ -21,6 +21,7 @@ class Header extends React.Component {
         <span className="email">
           <span className="user-name">{ user.username}</span>
           { ' - ' + user.email }
+          <Link to="/logout">Logout</Link>
           </span>
         }
       </header>
