@@ -100,7 +100,7 @@ class Collection extends React.Component {
     } = this.props;
 
     const isWished = coinId => {
-      if (user.loading) return false;
+      if (user.loading || !user.me) return false;
       return _Find(user.me.wishes, {id: coinId}) !== undefined;
     }
 
@@ -205,7 +205,7 @@ class Collection extends React.Component {
           <TableHead/>
           <tbody>
           { [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(i => (
-            <tr>
+            <tr key={i}>
               <td><span className="skeleton-text"/></td>
               <td><span className="skeleton-text"/></td>
               <td><span className="skeleton-text"/></td>

@@ -45,22 +45,24 @@ class Homepage extends React.Component {
         <span>TODO: Put a timeline chart here based on timestamps</span>
         <hr/>
         <h2><i className="fa fa-heart"/> Wishlist</h2>
-        <form className="wishlist-form">
-          <span>Quick Find</span>
-          <select>
-            <option>Denomination (not yet implemented)</option>
-            <option value="0.005">Half Cent</option>
-            <option value="0.01">1 Cent</option>
-            <option value="0.02">2 Cent</option>
-            <option value="0.03">3 Cent</option>
-            <option value="0.05">Nickel</option>
-            <option value="0.10">Dime</option>
-            <option value="0.20">20 Cent</option>
-            <option value="0.25">Quarter</option>
-            <option value="0.50">Half Dollar</option>
-            <option value="1.00">Dollar</option>
-          </select>
-        </form>
+        { user.me.wishes && user.me.wishes.length > 0 &&
+          <form className="wishlist-form">
+            <span>Quick Find</span>
+            <select>
+              <option>Denomination (not yet implemented)</option>
+              <option value="0.005">Half Cent</option>
+              <option value="0.01">1 Cent</option>
+              <option value="0.02">2 Cent</option>
+              <option value="0.03">3 Cent</option>
+              <option value="0.05">Nickel</option>
+              <option value="0.10">Dime</option>
+              <option value="0.20">20 Cent</option>
+              <option value="0.25">Quarter</option>
+              <option value="0.50">Half Dollar</option>
+              <option value="1.00">Dollar</option>
+            </select>
+          </form>
+        }
         { !user.me.wishes &&
           <p className="no-results">:( You cant think of anything you wish for?</p>
         }

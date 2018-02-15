@@ -17,7 +17,7 @@ class Header extends React.Component {
             <li><Link to="/collection">Collection</Link></li>
           </ul>
         </nav>
-        { user &&
+        { user && user !== null &&
         <span className="email">
           <span className="user-name">{ user.username}</span>
           { ' - ' + user.email }
