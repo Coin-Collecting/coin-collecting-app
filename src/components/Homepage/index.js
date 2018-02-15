@@ -17,7 +17,8 @@ class Homepage extends React.Component {
 
     return (
       <article className="homepage-article">
-        <h1>Welcome { user.me.username }!!!</h1>
+        <h1>My Personal Dashboard</h1>
+        <hr/>
         <h2><i className="fa fa-pie-chart"/> Stats</h2>
         <ul className="stats">
           <li>
@@ -41,8 +42,29 @@ class Homepage extends React.Component {
             <div>Not to shabby!</div>
           </li>
         </ul>
+        <span>TODO: Put a timeline chart here based on timestamps</span>
+        <hr/>
         <h2><i className="fa fa-heart"/> Wishlist</h2>
-        { user.me.wishes &&
+        <form className="wishlist-form">
+          <span>Quick Find</span>
+          <select>
+            <option>Denomination (not yet implemented)</option>
+            <option value="0.005">Half Cent</option>
+            <option value="0.01">1 Cent</option>
+            <option value="0.02">2 Cent</option>
+            <option value="0.03">3 Cent</option>
+            <option value="0.05">Nickel</option>
+            <option value="0.10">Dime</option>
+            <option value="0.20">20 Cent</option>
+            <option value="0.25">Quarter</option>
+            <option value="0.50">Half Dollar</option>
+            <option value="1.00">Dollar</option>
+          </select>
+        </form>
+        { !user.me.wishes &&
+          <p className="no-results">:( You cant think of anything you wish for?</p>
+        }
+        { user.me.wishes && user.me.wishes.length > 0 &&
           <table className="wish-list branded-table">
             <thead>
               <tr>

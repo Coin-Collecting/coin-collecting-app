@@ -13,7 +13,7 @@ class Header extends React.Component {
         <h1>My Coin Store</h1>
         <nav>
           <ul>
-            <li><Link to="/">Home</Link></li>
+            <li><Link to="/">Dashboard</Link></li>
             <li><Link to="/collection">Collection</Link></li>
           </ul>
         </nav>

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
-import Spinner from '../Spinner';
 import './style.scss';
 import { abbreviateMint } from '../../util';
 import _Find from 'lodash/find';
@@ -107,6 +106,7 @@ class Collection extends React.Component {
 
     const AddButtons = () => (
       <div className="add-buttons">
+        <span>Add coin to Collection:</span>
         { coinQualities.map((quality, index) => {
           return (
             <button
@@ -184,10 +184,39 @@ class Collection extends React.Component {
       );
     }
 
+    const TableHead = () => (
+      <thead>
+        <tr>
+          <th>Wish</th>
+          <th>Year</th>
+          <th>Owned</th>
+          <th>Variety</th>
+          <th>Mintage</th>
+          <th>Composition</th>
+          <th>Ebay</th>
+        </tr>
+      </thead>
+    );
+
     if (loading) return (
       <div className="collection-container">
         <AddButtons />
-        <Spinner />
+        <table>
+          <TableHead/>
+          <tbody>
+          { [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(i => (
+            <tr>
+              <td><span className="skeleton-text"/></td>
+              <td><span className="skeleton-text"/></td>
+              <td><span className="skeleton-text"/></td>
+              <td><span className="skeleton-text"/></td>
+              <td><span className="skeleton-text"/></td>
+              <td><span className="skeleton-text"/></td>
+              <td><span className="skeleton-text"/></td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
       </div>
     );
 
@@ -195,17 +224,7 @@ class Collection extends React.Component {
       <div className="collection-container">
         <AddButtons />
         <table>
-          <thead>
-            <tr>
-              <th>Wishlist</th>
-              <th>Year</th>
-              <th>Owned</th>
-              <th>Variety</th>
-              <th>Mintage</th>
-              <th>Composition</th>
-              <th>Ebay</th>
-            </tr>
-          </thead>
+          <TableHead/>
           <tbody>
           {
             coins && coins.edges && coins.edges.map(coin => {

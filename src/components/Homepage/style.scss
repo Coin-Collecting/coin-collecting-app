@@ -2,6 +2,24 @@
 
 .homepage-article {
   text-align: center;
+  padding-bottom: 100px;
+
+  h1 {
+    padding: 60px 0 30px;
+    margin: 0;
+  }
+
+  h2 {
+    margin: 40px 20px;
+    font-size: 28px;
+    color: $brandedAlt;
+  }
+
+  hr {
+    width: 1200px;
+    max-width: 100%;
+    margin: 40px auto;
+  }
 
   .stats {
     margin: 0;
@@ -10,22 +28,48 @@
 
     li {
       display: inline-block;
-      padding: 50px;
-      background-color: $primaryColor;
+      padding: 30px 50px;
       margin: 20px;
+      border-radius: 5px;
+      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+40,4abdac+100 */
+      background: #ffffff; /* Old browsers */
+      background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #ffffff 40%, #4abdac 100%); /* FF3.6-15 */
+      background: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#ffffff 40%,#4abdac 100%); /* Chrome10-25,Safari5.1-6 */
+      background: radial-gradient(ellipse at center,  #ffffff 0%,#ffffff 40%,#4abdac 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#4abdac',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
       span {
         display: block;
-        font-size: 18px;
+        font-size: 22px;
         font-weight: bold;
       }
 
       i {
         display: block;
-        font-size: 70px;
+        font-size: 60px;
         font-weight: bold;
         font-style: normal;
       }
+    }
+  }
+
+  .no-results {
+    color: $lightGray;
+    padding: 40px;
+    border: dashed 1px $lightestGray;
+    width: 800px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .wishlist-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+
+    span {
+      display: inline-block;
+      margin-right: 10px;
     }
   }
 

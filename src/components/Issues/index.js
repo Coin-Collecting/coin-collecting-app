@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './style.scss';
+import IssueImage from '../IssueImage/index'
 
 class Issues extends React.Component {
   render() {
@@ -111,6 +112,7 @@ class Issues extends React.Component {
             </li>
           </ul>
         </nav>
+        <IssueImage issueId={params.issueId} />
       </div>
     );
   }
