@@ -1,5 +1,5 @@
 import React from 'react';
-import { routes } from './routes';
+import { routes } from './routes/routes';
 import { ApolloProvider, ApolloClient, createNetworkInterface } from 'react-apollo';
 import { createStore, combineReducers } from 'redux';
 import { responsiveStateReducer, responsiveStoreEnhancer } from 'redux-responsive'

@@ -14,7 +14,7 @@ class Header extends React.Component {
         <nav>
           <ul>
             <li><Link to="/">Dashboard</Link></li>
-            <li><Link to="/collection">Collection</Link></li>
+            <li><Link to="/collection/large-cent">Collection</Link></li>
           </ul>
         </nav>
         { user && user !== null &&
