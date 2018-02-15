@@ -10,7 +10,7 @@ class Homepage extends React.Component {
   render() {
     let { removeFromWishList, user } = this.props;
 
-    if (user.loading) return null;
+    if (user.loading || !user.me) return null;
 
     const percentComplete =
       parseFloat((user.me.totalUniqueOwned / (user.me.totalMissing + user.me.totalUniqueOwned)) * 100).toFixed(1);
