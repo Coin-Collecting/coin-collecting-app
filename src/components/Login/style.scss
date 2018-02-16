@@ -1,38 +1,51 @@
 @import '../../base/palette';
 
 .login-container {
-  text-align: center;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh);
   position: relative;
 
   .container {
-    max-width: 300px;
+    max-width: 400px;
     position: absolute;
     left: calc(50% - 125px);
-    top: 100px;
-    display: inline-block;
-    vertical-align: middle;
+    top: calc(50% - 250px);
+    padding: 40px;
+  }
+
+  h1 {
+    font-size: 36px;
+    color: $primaryColor;
+    margin: 0 0 10px;
+    text-align: left;
+
+    img {
+      width: 50px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 20px;
+    }
+  }
+
+  label {
+    font-size: 12px;
+    color: $lightGray;
   }
 
   input {
-    width: 100%;
-    margin-bottom: 20px;
-    padding: 20px;
-    height: auto;
-    border: solid 1px darken($primaryColor, 25%);
-    background-color: #fff;
-    border-radius: 0;
+    &:focus {
+      border: 0 !important;
+    }
   }
 
-  button {
-    width: 100%;
-    background-color: $primaryColor;
-    color: $brandedWhite;
-    padding: 25px;
-    border: solid 1px darken($primaryColor, 25%);
-    outline: none;
+  input:-webkit-autofill {
+    background-color: transparent !important;
+  }
+
+  .btn-wrapper {
+    text-align: right;
+    padding: 40px 0 0;
   }
 }

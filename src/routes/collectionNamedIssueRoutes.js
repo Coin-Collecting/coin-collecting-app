@@ -1,20 +1,14 @@
 import React from 'react';
 import { Route } from 'react-router-dom'
 import { getIssueIdsByName } from '../constants';
-
-import SidebarLayout from '../components/SidebarLayout';
 import Collection from '../components/Collection';
-import Issues from '../components/Issues';
 
 const CollectionAlias = props => (
-  <SidebarLayout>
-    <Issues issueId={props.issueId}/>
-    <Collection
-      {...props}
-      issueId={props.issueId}
-      page={props.match.params.page || 1}
-    />
-  </SidebarLayout>
+  <Collection
+    {...props}
+    issueId={props.issueId}
+    page={props.match.params.page || 1}
+  />
 );
 
 export const CollectionNamedIssueRoutes = props => (

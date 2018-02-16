@@ -45,7 +45,7 @@ export const denominationName = val => {
       return "3 Cent Piece";
     case '0.05':
       return "Nickel";
-    case '0.10':
+    case '0.1':
       return "Dime";
     case '0.25':
       return "Quarter";

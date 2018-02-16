@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './style.scss';
 
 import { S3_URL } from '../../constants';
 
@@ -85,13 +84,13 @@ const images = {
 
 class IssueImage extends React.Component {
   render() {
-    const { issueId } = this.props;
+    const { issueId, imageWidth } = this.props;
     if (!images[issueId]) return null;
     return (
       <div className="issue-image-container">
         <div className="content">
           { images[issueId].map((img, index) => (
-            <img key={index} src={S3_URL + img} />
+            <img key={index} src={S3_URL + img} width={imageWidth} />
           ))}
         </div>
       </div>
@@ -101,6 +100,11 @@ class IssueImage extends React.Component {
 
 IssueImage.propTypes = {
   issueId: PropTypes.string.isRequired,
+  imageWidth: PropTypes.number,
 };
+
+IssueImage.defaultProps = {
+  imageWidth: 200,
+}
 
 export default IssueImage;

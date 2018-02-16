@@ -1,52 +1,7 @@
-@import '../../base/palette';
-
 .global-header {
-  background-color: $brandedAlt;
-
-  h1 {
-    margin: 0;
-    padding: 20px;
-    font-size: 18px;
-    display: inline-block;
-  }
-
-  nav {
-    display: inline-block;
-  }
-
-  ul {
-    list-style: none;
-    padding: 20px 0;
-    margin: 0;
-  }
-
-  li {
-    display: inline-block;
-    margin-right: 30px;
-  }
-
-  a {
-    color: $brandedWhite;
-  }
-
-  .email {
-    float: right;
-    line-height: 60px;
-    padding-right: 30px;
-
-    a {
-      display: inline-block;
-      margin-left: 15px;
-      background-color: $secondaryColor;
-      padding: 0 15px;
-      line-height: 40px;
-      border: solid 1px darken($secondaryColor, 25%);
-      border-radius: 10px;
-
-    }
-
-    .user-name {
-      font-weight: bold;
-    }
-  }
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  right: 0;
 }

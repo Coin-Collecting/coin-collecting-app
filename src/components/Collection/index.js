@@ -6,6 +6,21 @@ import { Link } from 'react-router-dom';
 import './style.scss';
 import { abbreviateMint } from '../../util';
 import _Find from 'lodash/find';
+import Snackbar from 'material-ui/Snackbar';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import IssueImage from '../IssueImage';
+import Badge from 'material-ui/Badge';
+import Divider from 'material-ui/Divider';
+
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
 import {
   AddCoinMutation,
@@ -66,20 +81,17 @@ class Collection extends React.Component {
     this.state = {
       count: DEFAULT_COUNT,
       selectedIds: [],
+      open: false,
     }
   }
 
-  toggleRow(id) {
-    let newIds = this.state.selectedIds;
+  toggleRow(id, rowIndex) {
     let newId = null;
-
-    if (!this.isSelected(id)) {
-      newId = id;
-    }
-
+    if (!this.isSelected(id)) newId = id;
     this.setState({
       selectedIds: [newId],
-    })
+      rowIndex,
+    });
   }
 
   isSelected(id) {
@@ -104,35 +116,28 @@ class Collection extends React.Component {
       return _Find(user.me.wishes, {id: coinId}) !== undefined;
     }
 
-    const AddButtons = () => (
-      <div className="add-buttons">
-        <span>Add coin to Collection:</span>
-        { coinQualities.map((quality, index) => {
-          return (
-            <button
-              key={index}
-              disabled={!this.state.selectedIds[0]}
-              className={quality}
-              onClick={() => {
-                if (this.state.selectedIds[0] != '') {
-                  addCoin({
-                    coinId: this.state.selectedIds[0],
-                    quality: quality,
-                  })
-                    .then(() => {
-                      this.props.coinsData.refetch();
-                      this.setState({
-                        selectedIds: [],
-                      })
-                    })
-                }
-              }}
-            >
-              { quality }
-            </button>
-          )
-        })}
-      </div>
+    const AddButtons = ({ coinId }) => (
+      <SelectField
+        floatingLabelText="Add to Collection"
+        value={this.state.value}
+        onChange={(e,i,value) => {
+          addCoin({
+            coinId,
+            quality: value,
+          }).then(() => {
+            this.props.coinsData.refetch();
+            this.setState({open: true});
+          });
+        }}
+      >
+        { coinQualities.map((quality, index) => (
+          <MenuItem
+            key={index}
+            value={quality}
+            primaryText={quality}
+          />
+        ))}
+      </SelectField>
     );
 
     const Paginate = () => {
@@ -184,64 +189,88 @@ class Collection extends React.Component {
       );
     }
 
-    const TableHead = () => (
-      <thead>
-        <tr>
-          <th>Wish</th>
-          <th>Year</th>
-          <th>Owned</th>
-          <th>Variety</th>
-          <th>Mintage</th>
-          <th>Composition</th>
-          <th>Ebay</th>
-        </tr>
-      </thead>
+    const tableHeader = (
+      <TableRow selectable={false}>
+        <TableHeaderColumn>Wish</TableHeaderColumn>
+        <TableHeaderColumn>Year</TableHeaderColumn>
+        <TableHeaderColumn>Owned</TableHeaderColumn>
+        <TableHeaderColumn>Variety</TableHeaderColumn>
+        <TableHeaderColumn>Mintage</TableHeaderColumn>
+        <TableHeaderColumn>Composition</TableHeaderColumn>
+        <TableHeaderColumn>Ebay</TableHeaderColumn>
+        <TableHeaderColumn>Add</TableHeaderColumn>
+      </TableRow>
+    );
+
+    let issueName = this.props.match.url
+      .replace(/\//g, '')
+      .replace(/collection/g, '')
+      .replace(/-/g, ' ');
+
+    const CoinInfo = () => (
+      <header>
+        <IssueImage
+          imageWidth={170}
+          issueId={this.props.issueId}
+        />
+        <div className="content">
+          <h1>{issueName} <span>1794 - 2018</span></h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
+      </header>
     );
 
     if (loading) return (
       <div className="collection-container">
-        <AddButtons />
-        <table>
-          <TableHead/>
-          <tbody>
+        <CoinInfo/>
+        <Table>
+          <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+            {tableHeader}
+          </TableHeader>
+          <Divider/>
+          <TableBody
+            displayRowCheckbox={false}
+            showRowHover={true}
+            selectable={false}
+          >
           { [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(i => (
-            <tr key={i}>
-              <td><span className="skeleton-text"/></td>
-              <td><span className="skeleton-text"/></td>
-              <td><span className="skeleton-text"/></td>
-              <td><span className="skeleton-text"/></td>
-              <td><span className="skeleton-text"/></td>
-              <td><span className="skeleton-text"/></td>
-              <td><span className="skeleton-text"/></td>
-            </tr>
+            <TableRow key={i}>
+              <TableRowColumn><span className="skeleton-text"/></TableRowColumn>
+              <TableRowColumn><span className="skeleton-text"/></TableRowColumn>
+              <TableRowColumn><span className="skeleton-text"/></TableRowColumn>
+              <TableRowColumn><span className="skeleton-text"/></TableRowColumn>
+              <TableRowColumn><span className="skeleton-text"/></TableRowColumn>
+              <TableRowColumn><span className="skeleton-text"/></TableRowColumn>
+              <TableRowColumn><span className="skeleton-text"/></TableRowColumn>
+            </TableRow>
           ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     );
 
     return (
       <div className="collection-container">
-        <AddButtons />
-        <table>
-          <TableHead/>
-          <tbody>
+        <CoinInfo/>
+        <Divider/>
+        <Table>
+          <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+            {tableHeader}
+          </TableHeader>
+          <TableBody
+            displayRowCheckbox={false}
+            showRowHover={true}
+            selectable={false}
+          >
           {
-            coins && coins.edges && coins.edges.map(coin => {
+            coins && coins.edges && coins.edges.map((coin, index) => {
               const { id, year, mint, owned, issue, mintage } = coin.node;
               return (
-                <tr
+                <TableRow
                   key={id}
-                  onClick={({target}) => {
-                    if (
-                      new RegExp("fa").test(target.className) ||
-                      new RegExp("owned").test(target.className)
-                    ) return false;
-                    this.toggleRow(id);
-                  }}
-                  className={this.isSelected(id) ? 'active' : null}
+                  selected={this.state.rowIndex === index}
                 >
-                  <td>
+                  <TableRowColumn>
                     <i
                       className={[
                         "fa fa-heart",
@@ -253,13 +282,13 @@ class Collection extends React.Component {
                           : addToWishList(id).then(() => user.refetch());
                       }}
                     />
-                  </td>
-                  <td>{ year } { abbreviateMint(mint) }</td>
-                  <td><Owned owned={owned} /></td>
-                  <td>{ issue.variety }</td>
-                  <td>{ mintage }</td>
-                  <td>{ issue.composition }</td>
-                  <td>
+                  </TableRowColumn>
+                  <TableRowColumn>{ year } { abbreviateMint(mint) }</TableRowColumn>
+                  <TableRowColumn><Owned owned={owned} /></TableRowColumn>
+                  <TableRowColumn>{ issue.variety }</TableRowColumn>
+                  <TableRowColumn>{ mintage }</TableRowColumn>
+                  <TableRowColumn>{ issue.composition }</TableRowColumn>
+                  <TableRowColumn>
                     <a
                       className="ebay"
                       target="_blank"
@@ -267,14 +296,27 @@ class Collection extends React.Component {
                     >
                       <i className="fa fa-gavel"/>
                     </a>
-                  </td>
-                </tr>
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <AddButtons coinId={id}/>
+                  </TableRowColumn>
+                </TableRow>
               )
             })
           }
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
         <Paginate/>
+        <Snackbar
+          open={this.state.open}
+          message="Coin added to your collection"
+          autoHideDuration={4000}
+          onRequestClose={() => {
+            this.setState({
+              open: false,
+            });
+          }}
+        />
       </div>
     );
   }

@@ -4,6 +4,40 @@ import './style.scss';
 import { abbreviateMint, denominationName } from '../../util';
 import { graphql, compose } from 'react-apollo';
 import { RemoveFromWishListMutation, MeQuery } from '../../queries-mutations';
+import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
+import AppBar from 'material-ui/AppBar';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+
+const paperWishListStyle = {
+  margin: 20,
+  width: 700,
+  maxWidth: '100%',
+  display: 'inline-block',
+}
+
+const paperStyle = {
+  width: 350,
+  margin: 20,
+  maxWidth: '100%',
+  textAlign: 'center',
+  display: 'inline-block',
+};
+
+const appBarStyle = {
+  backgroundColor: '#b5b5b5',
+};
+
+const appBarWishListStyle = {
+  backgroundColor: '#fe491a',
+};
 
 // eslint-disable-next-line react/prefer-stateless-function
 class Homepage extends React.Component {
@@ -17,97 +51,129 @@ class Homepage extends React.Component {
 
     return (
       <article className="homepage-article">
-        <h1>My Personal Dashboard</h1>
-        <hr/>
-        <h2><i className="fa fa-pie-chart"/> Stats</h2>
-        <ul className="stats">
-          <li>
-            <span>Total Owned</span>
-            <i>{ user.me.totalOwned }</i>
-            <div>Whole inventory (doubles)</div>
-          </li>
-          <li>
-            <span>Unique Owned</span>
-            <i>{ user.me.totalUniqueOwned }</i>
-            <div>Out of {user.me.totalMissing + user.me.totalUniqueOwned}</div>
-          </li>
-          <li>
-            <span>Left to Get!</span>
-            <i>{ user.me.totalMissing }</i>
-            <div>Not possible...</div>
-          </li>
-          <li>
-            <span>Percent Complete!</span>
-            <i>{ percentComplete + '%' }</i>
-            <div>Not to shabby!</div>
-          </li>
-        </ul>
-        <span>TODO: Put a timeline chart here based on timestamps</span>
-        <hr/>
-        <h2><i className="fa fa-heart"/> Wishlist</h2>
-        { user.me.wishes && user.me.wishes.length > 0 &&
-          <form className="wishlist-form">
-            <span>Quick Find</span>
-            <select>
-              <option>Denomination (not yet implemented)</option>
-              <option value="0.005">Half Cent</option>
-              <option value="0.01">1 Cent</option>
-              <option value="0.02">2 Cent</option>
-              <option value="0.03">3 Cent</option>
-              <option value="0.05">Nickel</option>
-              <option value="0.10">Dime</option>
-              <option value="0.20">20 Cent</option>
-              <option value="0.25">Quarter</option>
-              <option value="0.50">Half Dollar</option>
-              <option value="1.00">Dollar</option>
-            </select>
-          </form>
-        }
-        { !user.me.wishes &&
-          <p className="no-results">:( You cant think of anything you wish for?</p>
-        }
-        { user.me.wishes && user.me.wishes.length > 0 &&
-          <table className="wish-list branded-table">
-            <thead>
-              <tr>
-                <th>Year</th>
-                <th>Denomination</th>
-                <th>Variety</th>
-                <th>Ebay</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-            { user.me.wishes.map((wish, index) => {
-              return (
-                <tr key={wish.id}>
-                  <td className="year">{wish.year}{abbreviateMint(wish.mint)}</td>
-                  <td className="denomination">{denominationName(wish.issue.denomination.val)}</td>
-                  <td className="variety">{wish.issue.variety}</td>
-                  <td>
-                    <a
-                      className="ebay"
-                      target="_blank"
-                      href={`https://www.ebay.com/sch/i.html?_nkw=${wish.year}+${abbreviateMint(wish.mint)}+${wish.issue.variety.replace(/ /g, '+')}&LH_BIN=1&_sop=15`}
-                    >
-                      <i className="fa fa-gavel"/>
-                    </a>
-                  </td>
-                  <td>
-                    <i
-                      className="fa fa-times"
-                      onClick={() => {
-                        removeFromWishList(wish.id);
-                        user.refetch();
-                      }}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-            </tbody>
-          </table>
-        }
+        <div className="card-content">
+          <Paper style={paperStyle} zDepth={1} >
+            <AppBar
+              title="Unique Owned"
+              iconClassNameLeft="fa fa-trophy"
+              style={appBarStyle}
+            />
+            <div className="paper-content">
+              <i>{ user.me.totalUniqueOwned }</i>
+              <div>Out of {user.me.totalMissing + user.me.totalUniqueOwned}</div>
+            </div>
+          </Paper>
+
+          <Paper style={paperStyle} zDepth={1} >
+            <AppBar
+              title="Total Owned"
+              iconClassNameLeft="fa fa-thumbs-up"
+              style={appBarStyle}
+            />
+            <div className="paper-content">
+              <i>{ user.me.totalOwned }</i>
+              <div>Whole inventory (doubles)</div>
+            </div>
+          </Paper>
+
+          <Paper style={paperStyle} zDepth={1} >
+            <AppBar
+              title="Left to Get"
+              iconClassNameLeft="fa fa-flag-checkered"
+              style={appBarStyle}
+            />
+            <div className="paper-content">
+              <i>{ user.me.totalMissing }</i>
+              <div>Not possible...</div>
+            </div>
+          </Paper>
+
+          <Paper style={paperStyle} zDepth={1} >
+            <AppBar
+              title="Percent Complete"
+              iconClassNameLeft="fa fa-battery-half"
+              style={appBarStyle}
+            />
+            <div className="paper-content">
+              <i>{ percentComplete + '%' }</i>
+              <div>Not to shabby!</div>
+            </div>
+          </Paper>
+
+          {/*<Paper style={paperStyle} zDepth={1} >*/}
+            {/*<AppBar*/}
+              {/*title="Coin Quality"*/}
+              {/*iconClassNameLeft="fa fa-pie-chart"*/}
+              {/*style={appBarStyle}*/}
+            {/*/>*/}
+            {/*<div className="paper-content">*/}
+              {/*Coming soon*/}
+            {/*</div>*/}
+          {/*</Paper>*/}
+
+          <Divider/>
+
+          <Paper style={paperWishListStyle} zDepth={1} >
+            <AppBar
+              title="Wishlist"
+              iconClassNameLeft="fa fa-heart"
+              style={appBarWishListStyle}
+            />
+            { !user.me.wishes &&
+            <p className="no-results">:( You cant think of anything you wish for?</p>
+            }
+
+            { user.me.wishes && user.me.wishes.length > 0 &&
+            <Table>
+              <TableHeader
+                adjustForCheckbox={false}
+                displaySelectAll={false}
+              >
+                <TableRow>
+                  <TableHeaderColumn>Year</TableHeaderColumn>
+                  <TableHeaderColumn>Denomination</TableHeaderColumn>
+                  <TableHeaderColumn>Variety</TableHeaderColumn>
+                  <TableHeaderColumn>Ebay</TableHeaderColumn>
+                  <TableHeaderColumn>Remove</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody
+                displayRowCheckbox={false}
+                showRowHover={true}
+                selectable={false}
+              >
+                { user.me.wishes.map((wish, index) => {
+                  return (
+                    <TableRow key={wish.id}>
+                      <TableRowColumn className="year">{wish.year}{abbreviateMint(wish.mint)}</TableRowColumn>
+                      <TableRowColumn className="denomination">{denominationName(wish.issue.denomination.val)}</TableRowColumn>
+                      <TableRowColumn className="variety">{wish.issue.variety}</TableRowColumn>
+                      <TableRowColumn>
+                        <a
+                          className="ebay"
+                          target="_blank"
+                          href={`https://www.ebay.com/sch/i.html?_nkw=${wish.year}+${abbreviateMint(wish.mint)}+${wish.issue.variety.replace(/ /g, '+')}&LH_BIN=1&_sop=15`}
+                        >
+                          <i className="fa fa-gavel"/>
+                        </a>
+                      </TableRowColumn>
+                      <TableRowColumn>
+                        <i
+                          className="fa fa-times"
+                          onClick={() => {
+                            removeFromWishList(wish.id);
+                            user.refetch();
+                          }}
+                        />
+                      </TableRowColumn>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+            }
+          </Paper>
+        </div>
       </article>
     );
   }
