@@ -67,7 +67,7 @@ class Header extends React.Component {
             <NavLink to={"/collection/indian-head-cent"}>
               <ListItem primaryText="Indian Head Cent" />
             </NavLink>
-            <NavLink to={"/collection/linc-cent"}>
+            <NavLink to={"/collection/lincoln-cent"}>
               <ListItem primaryText="Lincoln Cent" />
             </NavLink>
             <Subheader>2 Cent</Subheader>
