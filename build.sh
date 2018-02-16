@@ -7,7 +7,6 @@ chmod +x build.sh
 
 yarn build
 
-rm -rf /var/www/html/*
-cp -a /home/ubuntu/coin-collecting-app/public/. /var/www/html/
+rm -rf /var/www/html/* && cp -a /home/ubuntu/coin-collecting-app/public/. /var/www/html/
 
 curl -X POST --data "payload={\"text\": \":slack: I am putting myself to the fullest possible use, which is all I think that any conscious entity can ever hope to do.\"}" https://hooks.slack.com/services/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

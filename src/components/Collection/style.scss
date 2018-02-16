@@ -87,6 +87,11 @@
     }
   }
 
+  .fa-gavel,
+  .fa-camera {
+    font-size: 22px;
+  }
+
   .fa-heart {
     color: transparentize($secondaryColor, .9);
     cursor: pointer;

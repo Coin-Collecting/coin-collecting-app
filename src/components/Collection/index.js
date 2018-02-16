@@ -198,6 +198,7 @@ class Collection extends React.Component {
         <TableHeaderColumn>Mintage</TableHeaderColumn>
         <TableHeaderColumn>Composition</TableHeaderColumn>
         <TableHeaderColumn>Ebay</TableHeaderColumn>
+        <TableHeaderColumn>Image</TableHeaderColumn>
         <TableHeaderColumn>Add</TableHeaderColumn>
       </TableRow>
     );
@@ -296,6 +297,9 @@ class Collection extends React.Component {
                     >
                       <i className="fa fa-gavel"/>
                     </a>
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <i className="fa fa-camera"/>
                   </TableRowColumn>
                   <TableRowColumn>
                     <AddButtons coinId={id}/>
