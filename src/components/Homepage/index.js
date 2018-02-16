@@ -131,7 +131,7 @@ class Homepage extends React.Component {
               >
                 <TableRow>
                   <TableHeaderColumn>Year</TableHeaderColumn>
-                  <TableHeaderColumn>Variety</TableHeaderColumn>
+                  <TableHeaderColumn>Variety asdf</TableHeaderColumn>
                   <TableHeaderColumn>Denomination</TableHeaderColumn>
                   <TableHeaderColumn>Minted</TableHeaderColumn>
                   <TableHeaderColumn>Ebay</TableHeaderColumn>
