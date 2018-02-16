@@ -1,12 +1,6 @@
+#!/usr/bin/env bash
 curl -X POST --data "payload={\"text\": \":slack: Starting Build - Web\"}" https://hooks.slack.com/services/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
 
-cd /coin-collecting
-git pull origin master
-yarn
-chmod +x build.sh
+cd /home/ubuntu/coin-collecting-app/ && git pull origin master && npm run build && rm -rf /var/www/html/* && cp -a /home/ubuntu/coin-collecting-app/public/. /var/www/html/
 
-yarn build
-
-rm -rf /var/www/html/* && cp -a /home/ubuntu/coin-collecting-app/public/. /var/www/html/
-
-curl -X POST --data "payload={\"text\": \":slack: Thanks for the great times on vacation! \"}" https://hooks.slack.com/services/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
+curl -X POST --data "payload={\"text\": \":slack: Build Complete - Web\"}" https://hooks.slack.com/services/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
