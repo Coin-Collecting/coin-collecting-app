@@ -49,4 +49,13 @@
   .fa-times {
     font-size: 22px;
   }
+
+  .wishlist-table {
+
+    th:last-child,
+    td:last-child {
+      width: 40px;
+      text-align: center !important;
+    }
+  }
 }

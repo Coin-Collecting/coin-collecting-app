@@ -66,6 +66,7 @@ export const MeQuery = gql`
             wishes {
                 id
                 year
+                mintage
                 issue {
                     id
                     variety

@@ -9,4 +9,4 @@ yarn build
 
 rm -rf /var/www/html/* && cp -a /home/ubuntu/coin-collecting-app/public/. /var/www/html/
 
-curl -X POST --data "payload={\"text\": \":slack: text here \"}" https://hooks.slack.com/services/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
+curl -X POST --data "payload={\"text\": \":slack: Thanks for the great times on vacation! \"}" https://hooks.slack.com/services/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

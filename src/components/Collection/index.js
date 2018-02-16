@@ -293,7 +293,7 @@ class Collection extends React.Component {
                     <a
                       className="ebay"
                       target="_blank"
-                      href={`https://www.ebay.com/sch/i.html?_nkw=${year}+${abbreviateMint(mint)}+${issue.variety.replace(/ /g, '+')}&LH_BIN=1&_sop=15`}
+                      href={`https://www.ebay.com/sch/i.html?_nkw=${year}+${abbreviateMint(mint)}+${issue.variety.replace(/ /g, '+')}+${denominationName(wish.issue.denomination.val)}&LH_BIN=1&_sop=15`}
                     >
                       <i className="fa fa-gavel"/>
                     </a>

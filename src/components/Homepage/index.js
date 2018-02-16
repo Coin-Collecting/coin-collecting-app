@@ -18,7 +18,7 @@ import {
 
 const paperWishListStyle = {
   margin: 20,
-  width: 700,
+  width: 740,
   maxWidth: '100%',
   display: 'inline-block',
 }
@@ -124,15 +124,16 @@ class Homepage extends React.Component {
             }
 
             { user.me.wishes && user.me.wishes.length > 0 &&
-            <Table>
+            <Table className="wishlist-table">
               <TableHeader
                 adjustForCheckbox={false}
                 displaySelectAll={false}
               >
                 <TableRow>
                   <TableHeaderColumn>Year</TableHeaderColumn>
-                  <TableHeaderColumn>Denomination</TableHeaderColumn>
                   <TableHeaderColumn>Variety</TableHeaderColumn>
+                  <TableHeaderColumn>Denomination</TableHeaderColumn>
+                  <TableHeaderColumn>Minted</TableHeaderColumn>
                   <TableHeaderColumn>Ebay</TableHeaderColumn>
                   <TableHeaderColumn>Remove</TableHeaderColumn>
                 </TableRow>
@@ -146,13 +147,14 @@ class Homepage extends React.Component {
                   return (
                     <TableRow key={wish.id}>
                       <TableRowColumn className="year">{wish.year}{abbreviateMint(wish.mint)}</TableRowColumn>
-                      <TableRowColumn className="denomination">{denominationName(wish.issue.denomination.val)}</TableRowColumn>
                       <TableRowColumn className="variety">{wish.issue.variety}</TableRowColumn>
+                      <TableRowColumn className="denomination">{denominationName(wish.issue.denomination.val)}</TableRowColumn>
+                      <TableRowColumn className="variety">{wish.mintage}</TableRowColumn>
                       <TableRowColumn>
                         <a
                           className="ebay"
                           target="_blank"
-                          href={`https://www.ebay.com/sch/i.html?_nkw=${wish.year}+${abbreviateMint(wish.mint)}+${wish.issue.variety.replace(/ /g, '+')}&LH_BIN=1&_sop=15`}
+                          href={`https://www.ebay.com/sch/i.html?_nkw=${wish.year}+${abbreviateMint(wish.mint)}+${wish.issue.variety.replace(/ /g, '+')}+${denominationName(wish.issue.denomination.val)}&LH_BIN=1&_sop=15`}
                         >
                           <i className="fa fa-gavel"/>
                         </a>
