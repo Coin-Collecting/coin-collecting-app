@@ -5,42 +5,6 @@
   position: relative;
   padding: 90px 20px 100px;
 
-  header {
-    text-align: center;
-    margin: 20px 15px 60px;
-
-    .content {
-      display: inline-block;
-      text-align: left;
-      max-width: 500px;
-      vertical-align: top;
-    }
-
-    h1 {
-      text-transform: capitalize;
-
-      span {
-        margin-left: 10px;
-        font-size: 20px;
-        color: $lightGray;
-        font-family: 'Roboto', sans-serif;
-      }
-    }
-
-    .issue-image-container {
-      display: inline-block;
-
-      img {
-        display: none;
-        margin: 20px;
-
-        &:first-child {
-          display: inline-block;
-        }
-      }
-    }
-  }
-
   .skeleton-text {
     display: inline-block;
     width: 100%;
@@ -53,12 +17,17 @@
 
   th,
   td {
-    &:first-child {
-      width: 20px;
-      text-align: center;
+    &.xsmall-center {
+      width: 30px;
+      text-align: center !important;
     }
 
-    &:nth-child(2) {
+    &.small-center {
+      width: 50px;
+      text-align: center !important;
+    }
+
+    &.bold {
       font-weight: bolder;
     }
   }

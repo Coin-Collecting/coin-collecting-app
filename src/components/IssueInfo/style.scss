@@ -1,0 +1,30 @@
+@import '../../base/palette.scss';
+
+.issue-info-container {
+  text-align: center;
+  margin: 20px 15px 60px;
+
+  .content {
+    display: inline-block;
+    text-align: left;
+    max-width: 500px;
+    vertical-align: top;
+  }
+
+  h1 {
+    text-transform: capitalize;
+
+    span {
+      margin-left: 10px;
+      font-size: 20px;
+      color: $lightGray;
+      font-family: 'Roboto', sans-serif;
+    }
+  }
+
+  img {
+    width: 220px;
+    display: inline-block;
+    margin: 20px;
+  }
+}

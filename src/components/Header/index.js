@@ -41,6 +41,8 @@ class Header extends React.Component {
                 <MenuItem primaryText="Collection" />
               </Link>
               <MenuItem primaryText="Settings" disabled={true}/>
+              <MenuItem primaryText="Local Dealers" disabled={true}/>
+              <MenuItem primaryText="Supplies" disabled={true}/>
               <MenuItem primaryText="Add Photos" disabled={true}/>
               <Divider />
               <Link to="/logout">

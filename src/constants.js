@@ -1,4 +1,5 @@
 export const coinQualities = [
+  'Not Graded',
   'AG',
   'G',
   'VG',
@@ -11,7 +12,10 @@ export const coinQualities = [
   'MINTSET',
   'Special',
   'Clip',
-  'Not Graded',
+  'Roll',
+  'Error',
+  'Double Die',
+  'Date over Date',
 ];
 
 export const S3_URL = 'http://s3.mycoin.store/';

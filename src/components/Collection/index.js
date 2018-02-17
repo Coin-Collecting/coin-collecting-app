@@ -4,14 +4,14 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import './style.scss';
-import { abbreviateMint } from '../../util';
+import { abbreviateMint, denominationName } from '../../util';
 import _Find from 'lodash/find';
 import Snackbar from 'material-ui/Snackbar';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import IssueImage from '../IssueImage';
-import Badge from 'material-ui/Badge';
+import { connect } from 'react-redux';
 import Divider from 'material-ui/Divider';
+import IssueInfo from '../IssueInfo';
 
 import {
   Table,
@@ -66,6 +66,9 @@ const CoinsQuery = gql`
                         id
                         composition
                         variety
+                        denomination {
+                            val
+                        }
                     }
                     mint
                     mintage
@@ -109,6 +112,7 @@ class Collection extends React.Component {
       addToWishList,
       removeFromWishList,
       user,
+      browser,
     } = this.props;
 
     const isWished = coinId => {
@@ -191,15 +195,15 @@ class Collection extends React.Component {
 
     const tableHeader = (
       <TableRow selectable={false}>
-        <TableHeaderColumn>Wish</TableHeaderColumn>
-        <TableHeaderColumn>Year</TableHeaderColumn>
+        <TableHeaderColumn className="xsmall-center">Wish</TableHeaderColumn>
+        <TableHeaderColumn className="small-center">Year</TableHeaderColumn>
         <TableHeaderColumn>Owned</TableHeaderColumn>
-        <TableHeaderColumn>Variety</TableHeaderColumn>
-        <TableHeaderColumn>Mintage</TableHeaderColumn>
-        <TableHeaderColumn>Composition</TableHeaderColumn>
-        <TableHeaderColumn>Ebay</TableHeaderColumn>
-        <TableHeaderColumn>Image</TableHeaderColumn>
-        <TableHeaderColumn>Add</TableHeaderColumn>
+        { !browser.lessThan.medium && <TableHeaderColumn>Variety</TableHeaderColumn> }
+        { !browser.lessThan.infinity && <TableHeaderColumn>Mintage</TableHeaderColumn> }
+        { !browser.lessThan.large && <TableHeaderColumn>Composition</TableHeaderColumn> }
+        { !browser.lessThan.medium && <TableHeaderColumn className="small-center">Auction</TableHeaderColumn> }
+        { !browser.lessThan.medium && <TableHeaderColumn className="small-center">Image</TableHeaderColumn> }
+        { !browser.lessThan.medium && <TableHeaderColumn>Add</TableHeaderColumn> }
       </TableRow>
     );
 
@@ -208,22 +212,9 @@ class Collection extends React.Component {
       .replace(/collection/g, '')
       .replace(/-/g, ' ');
 
-    const CoinInfo = () => (
-      <header>
-        <IssueImage
-          imageWidth={170}
-          issueId={this.props.issueId}
-        />
-        <div className="content">
-          <h1>{issueName} <span>1794 - 2018</span></h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-        </div>
-      </header>
-    );
-
     if (loading) return (
       <div className="collection-container">
-        <CoinInfo/>
+        <IssueInfo {...this.props}/>
         <Table>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             {tableHeader}
@@ -252,7 +243,7 @@ class Collection extends React.Component {
 
     return (
       <div className="collection-container">
-        <CoinInfo/>
+        <IssueInfo {...this.props}/>
         <Divider/>
         <Table>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
@@ -271,7 +262,7 @@ class Collection extends React.Component {
                   key={id}
                   selected={this.state.rowIndex === index}
                 >
-                  <TableRowColumn>
+                  <TableRowColumn className="xsmall-center">
                     <i
                       className={[
                         "fa fa-heart",
@@ -284,26 +275,26 @@ class Collection extends React.Component {
                       }}
                     />
                   </TableRowColumn>
-                  <TableRowColumn>{ year } { abbreviateMint(mint) }</TableRowColumn>
+                  <TableRowColumn className="small-center">{ year } { abbreviateMint(mint) }</TableRowColumn>
                   <TableRowColumn><Owned owned={owned} /></TableRowColumn>
-                  <TableRowColumn>{ issue.variety }</TableRowColumn>
-                  <TableRowColumn>{ mintage }</TableRowColumn>
-                  <TableRowColumn>{ issue.composition }</TableRowColumn>
-                  <TableRowColumn>
+                  { !browser.lessThan.medium && <TableRowColumn>{ issue.variety }</TableRowColumn> }
+                  { !browser.lessThan.large && <TableRowColumn>{ mintage }</TableRowColumn> }
+                  { !browser.lessThan.infinity && <TableRowColumn>{ issue.composition }</TableRowColumn>}
+                  { !browser.lessThan.medium && <TableRowColumn className="small-center">
                     <a
                       className="ebay"
                       target="_blank"
-                      href={`https://www.ebay.com/sch/i.html?_nkw=${year}+${abbreviateMint(mint)}+${issue.variety.replace(/ /g, '+')}+${denominationName(wish.issue.denomination.val)}&LH_BIN=1&_sop=15`}
+                      href={`https://www.ebay.com/sch/i.html?_nkw=${year}+${abbreviateMint(mint)}+${issue.variety.replace(/ /g, '+')}+${denominationName(issue.denomination.val)}&LH_BIN=1&_sop=15`}
                     >
                       <i className="fa fa-gavel"/>
                     </a>
-                  </TableRowColumn>
-                  <TableRowColumn>
+                  </TableRowColumn> }
+                  { !browser.lessThan.medium && <TableRowColumn className="small-center">
                     <i className="fa fa-camera"/>
-                  </TableRowColumn>
-                  <TableRowColumn>
+                  </TableRowColumn> }
+                  { !browser.lessThan.medium && <TableRowColumn>
                     <AddButtons coinId={id}/>
-                  </TableRowColumn>
+                  </TableRowColumn> }
                 </TableRow>
               )
             })
@@ -399,7 +390,14 @@ const removeFromWishListMutation = graphql(RemoveFromWishListMutation, {
   }),
 });
 
+const mapStateToProps = state => {
+  return {
+    browser: state.browser,
+  };
+};
+
 export default compose(
+  connect(mapStateToProps),
   coinsQuery,
   addCoinMutation,
   removeCoinMutation,

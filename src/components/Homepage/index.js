@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.scss';
+import { connect } from 'react-redux';
 import { abbreviateMint, denominationName } from '../../util';
 import { graphql, compose } from 'react-apollo';
 import { RemoveFromWishListMutation, MeQuery } from '../../queries-mutations';
@@ -18,7 +19,7 @@ import {
 
 const paperWishListStyle = {
   margin: 20,
-  width: 740,
+  boxSizing: 'border-box',
   maxWidth: '100%',
   display: 'inline-block',
 }
@@ -42,7 +43,7 @@ const appBarWishListStyle = {
 // eslint-disable-next-line react/prefer-stateless-function
 class Homepage extends React.Component {
   render() {
-    let { removeFromWishList, user } = this.props;
+    let { removeFromWishList, user, browser } = this.props;
 
     if (user.loading || !user.me) return null;
 
@@ -133,9 +134,9 @@ class Homepage extends React.Component {
                   <TableHeaderColumn>Year</TableHeaderColumn>
                   <TableHeaderColumn>Variety</TableHeaderColumn>
                   <TableHeaderColumn>Denomination</TableHeaderColumn>
-                  <TableHeaderColumn>Minted</TableHeaderColumn>
-                  <TableHeaderColumn>Ebay</TableHeaderColumn>
-                  <TableHeaderColumn>Remove</TableHeaderColumn>
+                  { !browser.lessThan.large && <TableHeaderColumn>Minted</TableHeaderColumn> }
+                  { !browser.lessThan.medium && <TableHeaderColumn className="small-center">Auction</TableHeaderColumn> }
+                  { !browser.lessThan.medium && <TableHeaderColumn className="small-center">Remove</TableHeaderColumn> }
                 </TableRow>
               </TableHeader>
               <TableBody
@@ -149,8 +150,8 @@ class Homepage extends React.Component {
                       <TableRowColumn className="year">{wish.year}{abbreviateMint(wish.mint)}</TableRowColumn>
                       <TableRowColumn className="variety">{wish.issue.variety}</TableRowColumn>
                       <TableRowColumn className="denomination">{denominationName(wish.issue.denomination.val)}</TableRowColumn>
-                      <TableRowColumn className="variety">{wish.mintage}</TableRowColumn>
-                      <TableRowColumn>
+                      { !browser.lessThan.large && <TableRowColumn className="variety">{wish.mintage}</TableRowColumn> }
+                      { !browser.lessThan.medium && <TableRowColumn className="small-center">
                         <a
                           className="ebay"
                           target="_blank"
@@ -158,8 +159,8 @@ class Homepage extends React.Component {
                         >
                           <i className="fa fa-gavel"/>
                         </a>
-                      </TableRowColumn>
-                      <TableRowColumn>
+                      </TableRowColumn> }
+                      { !browser.lessThan.medium && <TableRowColumn className="small-center">
                         <i
                           className="fa fa-times"
                           onClick={() => {
@@ -167,7 +168,7 @@ class Homepage extends React.Component {
                             user.refetch();
                           }}
                         />
-                      </TableRowColumn>
+                      </TableRowColumn> }
                     </TableRow>
                   );
                 })}
@@ -190,6 +191,12 @@ Homepage.defaultProps = {
   removeFromWishList: () => false,
 };
 
+const mapStateToProps = state => {
+  return {
+    browser: state.browser,
+  };
+};
+
 const removeFromWishListMutation = graphql(RemoveFromWishListMutation, {
   props: ({ mutate }) => ({
     removeFromWishList: id => {
@@ -201,6 +208,7 @@ const removeFromWishListMutation = graphql(RemoveFromWishListMutation, {
 });
 
 export default compose(
+  connect(mapStateToProps),
   removeFromWishListMutation,
   graphql(MeQuery, {name: 'user'}),
 )(Homepage);

@@ -1,35 +1,5 @@
 # NOTES
 
-## UPSTART
-- https://www.digitalocean.com/community/tutorials/the-upstart-event-system-what-it-is-and-how-to-use-it
-- services: /etc/init/
-- service --status-all
-- sudo service api start
-- sudo service api stop
-- logs: /var/log/upstart
-
-## APACHE2
-- /etc/apache2/sites-enabled
-- sudo service apache2 restart
-
-#### Apache Conf
-```
-<VirtualHost *:80>
-	ServerName api.mycoin.store
- 	ServerAlias api.mycoin.store
-	ProxyRequests off
-
-	<Proxy *>
-		Order deny,allow
-		Allow from all
-	</Proxy>
-        <Location />
-		ProxyPass http://localhost:5000/
-		ProxyPassReverse http://localhost:5000/
-	</Location>
-</VirtualHost>
-```
-
 ## BUILDING A NEW IMAGE
 (yes to all - passwords are all Dalekini21)
 ```
