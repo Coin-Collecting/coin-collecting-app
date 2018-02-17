@@ -207,7 +207,7 @@ class Collection extends React.Component {
         { !browser.lessThan.infinity && <TableHeaderColumn>Mintage</TableHeaderColumn> }
         { !browser.lessThan.large && <TableHeaderColumn>Composition</TableHeaderColumn> }
         { !browser.lessThan.medium && <TableHeaderColumn className="small-center">Auction</TableHeaderColumn> }
-        { !browser.lessThan.medium && <TableHeaderColumn className="small-center">Image</TableHeaderColumn> }
+        <TableHeaderColumn className="small-center">Image</TableHeaderColumn>
         { !browser.lessThan.medium && <TableHeaderColumn>Add</TableHeaderColumn> }
       </TableRow>
     );
@@ -294,13 +294,13 @@ class Collection extends React.Component {
                       <i className="fa fa-gavel"/>
                     </a>
                   </TableRowColumn> }
-                  { !browser.lessThan.medium && <TableRowColumn className="small-center">
+                  <TableRowColumn className="small-center">
                     { images.length > 0 && images.map(img => (
                         <a href={S3_URL + img.imageUrl} key={img.id} target="_new">
                           <i className="fa fa-image"/>
                         </a>
                     ))}
-                  </TableRowColumn> }
+                  </TableRowColumn>
                   { !browser.lessThan.medium && <TableRowColumn>
                     <AddButtons coinId={id}/>
                   </TableRowColumn> }
