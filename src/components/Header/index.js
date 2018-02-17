@@ -58,6 +58,7 @@ class Header extends React.Component {
           onRequestChange={(open) => this.setState({open})}
         >
           <List>
+            <ListItem><h2>Issues</h2></ListItem>
             <Subheader>1/2 Cent</Subheader>
             <NavLink to={"/collection/half-cent"}>
               <ListItem primaryText="Half Cent" />

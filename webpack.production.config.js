@@ -4,12 +4,16 @@ let loaders = require('./webpack.loaders');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 let WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 let config = require('./config')['production'];
 
 loaders.push({
   test: /\.scss$/,
-  loader: ExtractTextPlugin.extract({fallback: 'style-loader', use : 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!sass-loader?outputStyle=expanded'}),
+  loader: ExtractTextPlugin.extract({
+    fallback: 'style-loader',
+    use : 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!sass-loader?outputStyle=expanded',
+  }),
   exclude: ['node_modules']
 });
 
@@ -36,6 +40,9 @@ module.exports = {
       }
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new UglifyJsPlugin({
+      test: /\.js($|\?)/i
+    }),
     new ExtractTextPlugin({
       filename: 'style.css',
       allChunks: true

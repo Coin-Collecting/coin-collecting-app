@@ -522,11 +522,20 @@ h3 {
   font-weight: 700;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Raleway', sans-serif;
+}
+
 body,
 html {
   margin: 0;
   padding: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -538,27 +547,10 @@ body {
   overflow: auto;
   zoom: 1;
 }
-.sidebar-layout-component aside,
-.sidebar-layout-component .content {
-  display: inline-block;
-  vertical-align: top;
-}
-
-.sidebar-layout-component aside {
-  width: 250px;
-}
-
-.sidebar-layout-component .content {
-  width: calc(100% - 250px);
-}
 .collection-container {
   margin: 0;
   position: relative;
-  padding: 20px 20px 100px;
-}
-
-.collection-container .spinner-container {
-  margin-top: 200px;
+  padding: 90px 20px 100px;
 }
 
 .collection-container .skeleton-text {
@@ -567,98 +559,25 @@ body {
   height: 20px;
 }
 
-.collection-container table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.collection-container td,
-.collection-container th {
-  padding: 10px;
-  border: solid 1px #fff;
-}
-
-.collection-container td:last-child, .collection-container td:first-child,
-.collection-container th:last-child,
-.collection-container th:first-child {
-  width: 50px;
-  text-align: center;
-}
-
 .collection-container thead th {
   text-align: left;
-  color: #f7f7f7;
 }
 
-.collection-container thead tr {
-  background-color: #4abdac;
+.collection-container th.xsmall-center,
+.collection-container td.xsmall-center {
+  width: 30px;
+  text-align: center !important;
 }
 
-.collection-container tbody tr {
-  background-color: #f2ece7;
-  cursor: pointer;
+.collection-container th.small-center,
+.collection-container td.small-center {
+  width: 50px;
+  text-align: center !important;
 }
 
-.collection-container tbody tr:nth-child(odd) {
-  background-color: #fff;
-}
-
-.collection-container tbody tr:hover {
-  background-color: #eadfd6;
-}
-
-.collection-container tbody tr.active {
-  background-color: #5387fd;
-}
-
-.collection-container tbody tr.active td {
-  border: solid 1px #5c5c5c;
-}
-
-.collection-container .fa-check-circle {
-  color: #4abdac;
-}
-
-.collection-container .fa-times-circle {
-  color: #fe491a;
-}
-
-.collection-container .add-buttons {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #f7f7f7;
-  box-shadow: 1px -1px 15px rgba(105, 105, 105, 0.45098);
-  padding: 10px;
-}
-
-.collection-container .add-buttons span {
-  display: inline-block;
-  margin-right: 10px;
-  color: #4abdac;
-  font-weight: bold;
-}
-
-.collection-container .add-buttons button {
-  font-size: 18px;
-  transition: ease all .3s;
-  padding: 10px 20px;
-}
-
-.collection-container .add-buttons button:hover {
-  cursor: pointer;
-}
-
-.collection-container .add-buttons button:disabled {
-  opacity: .8;
-  background-color: #ededed;
-  border-color: #c7c7c7;
-  color: #adadad;
-}
-
-.collection-container .add-buttons button:disabled:hover {
-  cursor: not-allowed;
+.collection-container th.bold,
+.collection-container td.bold {
+  font-weight: bolder;
 }
 
 .collection-container .pagination {
@@ -685,9 +604,15 @@ body {
   cursor: not-allowed;
 }
 
+.collection-container .fa-gavel,
+.collection-container .fa-camera {
+  font-size: 22px;
+}
+
 .collection-container .fa-heart {
   color: rgba(254, 73, 26, 0.1);
   cursor: pointer;
+  font-size: 20px;
 }
 
 .collection-container .fa-heart:hover {
@@ -749,193 +674,82 @@ body {
   border: solid 1px #434343;
   color: #f7f7f7;
 }
-.issues-container {
-  margin: 0;
-  padding: 0 0 40px;
+.issue-info-container {
+  text-align: center;
+  margin: 20px 15px 60px;
 }
 
-.issues-container ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.issue-info-container .content {
+  display: inline-block;
+  text-align: left;
+  max-width: 500px;
+  vertical-align: top;
 }
 
-.issues-container a {
-  color: #000;
-  text-decoration: underline;
-  display: block;
-  margin: 20px 15px 20px 32px;
-  font-size: 16px;
+.issue-info-container h1 {
+  text-transform: capitalize;
 }
 
-.issues-container a:hover {
-  color: #4abdac;
-}
-
-.issues-container .active {
-  color: #4abdac;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.issues-container details {
-  outline: none;
-}
-
-.issues-container summary {
+.issue-info-container h1 span {
+  margin-left: 10px;
   font-size: 20px;
-  color: #000;
-  outline: none;
-  cursor: s-resize;
-  padding: 20px 10px 10px;
-  background-color: #f4f4f4;
-  margin: 5px 0;
-}
-.issue-image-container {
-  width: 100%;
-  top: 0;
+  color: #b5b5b5;
+  font-family: 'Roboto', sans-serif;
 }
 
-.issue-image-container .content {
-  width: 100%;
-  display: block;
-  box-sizing: border-box;
-}
-
-.issue-image-container .content img {
-  width: 100%;
-}
-.base-layout-component > div:first-child {
-  position: fixed;
-  height: 60px;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
-.base-layout-component > div:nth-child(2) {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  right: 0;
-  height: calc(100vh - 60px);
-  overflow-y: scroll;
+.issue-info-container img {
+  width: 220px;
+  display: inline-block;
+  margin: 20px;
 }
 .global-header {
-  background-color: #b59072;
-}
-
-.global-header h1 {
-  margin: 0;
-  padding: 20px;
-  font-size: 18px;
-  display: inline-block;
-}
-
-.global-header nav {
-  display: inline-block;
-}
-
-.global-header ul {
-  list-style: none;
-  padding: 20px 0;
-  margin: 0;
-}
-
-.global-header li {
-  display: inline-block;
-  margin-right: 30px;
-}
-
-.global-header a {
-  color: #f7f7f7;
-}
-
-.global-header .email {
-  float: right;
-  line-height: 60px;
-  padding-right: 30px;
-}
-
-.global-header .email a {
-  display: inline-block;
-  margin-left: 15px;
-  background-color: #fe491a;
-  padding: 0 15px;
-  line-height: 40px;
-  border: solid 1px #982001;
-  border-radius: 10px;
-}
-
-.global-header .email .user-name {
-  font-weight: bold;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 .section-container {
   display: block;
 }
-.main-container {
-  display: block;
-}
 .homepage-article {
   text-align: center;
-  padding-bottom: 100px;
+  padding-top: 120px;
+}
+
+.homepage-article .card-content {
+  margin: 0 auto;
+  width: 800px;
+  max-width: 100%;
+  text-align: center;
 }
 
 .homepage-article h1 {
-  padding: 60px 0 30px;
-  margin: 0;
-}
-
-.homepage-article h2 {
-  margin: 40px 20px;
-  font-size: 28px;
-  color: #b59072;
+  text-align: left;
 }
 
 .homepage-article hr {
-  width: 1200px;
-  max-width: 100%;
   margin: 40px auto;
 }
 
-.homepage-article .stats {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.homepage-article .paper-content {
+  padding: 30px;
 }
 
-.homepage-article .stats li {
-  display: inline-block;
-  padding: 30px 50px;
-  margin: 20px;
-  border-radius: 5px;
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+40,4abdac+100 */
-  background: #ffffff;
-  /* Old browsers */
-  background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #ffffff 40%, #4abdac 100%);
-  /* FF3.6-15 */
-  background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%, #ffffff 40%, #4abdac 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: radial-gradient(ellipse at center, #ffffff 0%, #ffffff 40%, #4abdac 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#4abdac',GradientType=1 );
-  /* IE6-9 fallback on horizontal gradient */
-}
-
-.homepage-article .stats li span {
+.homepage-article .paper-content span {
   display: block;
   font-size: 22px;
   font-weight: bold;
 }
 
-.homepage-article .stats li i {
+.homepage-article .paper-content i {
   display: block;
   font-size: 60px;
   font-weight: bold;
   font-style: normal;
 }
 
-.homepage-article .no-results {
+.homepage-article .paper-content .no-results {
   color: #b5b5b5;
   padding: 40px;
   border: dashed 1px #e8e8e8;
@@ -944,58 +758,59 @@ body {
   margin: 0 auto;
 }
 
-.homepage-article .wishlist-form {
-  max-width: 800px;
-  margin: 0 auto;
-  padding-bottom: 20px;
+.homepage-article .fa-gavel,
+.homepage-article .fa-times {
+  font-size: 22px;
 }
 
-.homepage-article .wishlist-form span {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.homepage-article .wish-list {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.homepage-article .wish-list td {
-  text-align: left;
+.homepage-article .wishlist-table .small-center {
+  width: 50px;
+  text-align: center !important;
 }
 .login-container {
-  text-align: center;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh);
   position: relative;
 }
 
 .login-container .container {
-  max-width: 300px;
+  max-width: 400px;
   position: absolute;
   left: calc(50% - 125px);
-  top: 100px;
+  top: calc(50% - 250px);
+  padding: 40px;
+}
+
+.login-container h1 {
+  font-size: 36px;
+  color: #4abdac;
+  margin: 0 0 10px;
+  text-align: left;
+}
+
+.login-container h1 img {
+  width: 50px;
   display: inline-block;
   vertical-align: middle;
+  margin-right: 20px;
 }
 
-.login-container input {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 20px;
-  height: auto;
-  border: solid 1px #24635a;
-  background-color: #fff;
-  border-radius: 0;
+.login-container label {
+  font-size: 12px;
+  color: #b5b5b5;
 }
 
-.login-container button {
-  width: 100%;
-  background-color: #4abdac;
-  color: #f7f7f7;
-  padding: 25px;
-  border: solid 1px #24635a;
-  outline: none;
+.login-container input:focus {
+  border: 0 !important;
+}
+
+.login-container input:-webkit-autofill {
+  background-color: transparent !important;
+}
+
+.login-container .btn-wrapper {
+  text-align: right;
+  padding: 40px 0 0;
 }
