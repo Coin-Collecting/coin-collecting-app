@@ -57,8 +57,13 @@
   }
 
   .fa-gavel,
-  .fa-camera {
+  .fa-camera,
+  .fa-image {
     font-size: 22px;
+  }
+
+  .fa-image {
+    color: $brandedBlue;
   }
 
   .fa-heart {

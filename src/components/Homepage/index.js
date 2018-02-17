@@ -97,7 +97,7 @@ class Homepage extends React.Component {
             />
             <div className="paper-content">
               <i>{ percentComplete + '%' }</i>
-              <div>Not to shabby!</div>
+              <div>Not too shabby!</div>
             </div>
           </Paper>
 

@@ -12,6 +12,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
 import Divider from 'material-ui/Divider';
 import IssueInfo from '../IssueInfo';
+import { S3_URL } from '../../constants';
 
 import {
   Table,
@@ -61,6 +62,10 @@ const CoinsQuery = gql`
                     owned {
                       id
                       quality
+                    }
+                    images {
+                        id
+                        imageUrl
                     }
                     issue {
                         id
@@ -256,7 +261,7 @@ class Collection extends React.Component {
           >
           {
             coins && coins.edges && coins.edges.map((coin, index) => {
-              const { id, year, mint, owned, issue, mintage } = coin.node;
+              const { id, year, mint, owned, issue, mintage, images } = coin.node;
               return (
                 <TableRow
                   key={id}
@@ -290,7 +295,11 @@ class Collection extends React.Component {
                     </a>
                   </TableRowColumn> }
                   { !browser.lessThan.medium && <TableRowColumn className="small-center">
-                    <i className="fa fa-camera"/>
+                    { images.length > 0 && images.map(img => (
+                        <a href={S3_URL + img.imageUrl} key={img.id} target="_new">
+                          <i className="fa fa-image"/>
+                        </a>
+                    ))}
                   </TableRowColumn> }
                   { !browser.lessThan.medium && <TableRowColumn>
                     <AddButtons coinId={id}/>
