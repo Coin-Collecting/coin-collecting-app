@@ -40,7 +40,9 @@ class Header extends React.Component {
               <Link to="/collection/large-cent">
                 <MenuItem primaryText="Collection" />
               </Link>
-              <MenuItem primaryText="Settings" disabled={true}/>
+              <Link to="/settings">
+                <MenuItem primaryText="Settings"/>
+              </Link>
               <MenuItem primaryText="Local Dealers" disabled={true}/>
               <MenuItem primaryText="Supplies" disabled={true}/>
               <MenuItem primaryText="Add Photos" disabled={true}/>

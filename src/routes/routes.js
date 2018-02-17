@@ -15,6 +15,7 @@ import Section from '../components/Section';
 
 import Homepage from '../components/Homepage';
 import Collection from '../components/Collection';
+import Settings from '../components/Settings';
 import Authenticate from '../components/Authenticate';
 
 import Logout from '../components/Logout';
@@ -31,6 +32,7 @@ export const routes = (
                 <Section {...props}>
                   <Switch>
                     <Route exact path="/" component={Homepage} />
+                    <Route exact path="/settings" component={Settings}/>
                     {/* /collection/half-cent/:page? */}
                     <CollectionNamedIssueRoutes {...props}/>
                     {/* /collection/1+2+3+4/:page? */}
